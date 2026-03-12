@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Adab Coach AI</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f4f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+    .container {
+      width: 100%;
+      max-width: 680px;
+      background: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #e0e0e0;
+    }
+    .header {
+      background: #0A6B4F;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+    .header h1 { color: #ffffff; font-size: 26px; font-weight: 600; letter-spacing: -0.3px; }
+    .header .arabic { color: #A8E6CF; font-size: 18px; margin-bottom: 8px; display: block; }
+    .header p { color: #A8E6CF; font-size: 14px; margin-top: 4px; }
+    .body { padding: 1.5rem; }
+    .examples-label { font-size: 13px; color: #666; margin-bottom: 8px; }
+    .examples { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; }
+    .chip {
+      font-size: 12px; padding: 5px 12px;
+      border: 1px solid #1D9E75; border-radius: 999px;
+      color: #085041; background: #E1F5EE;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .chip:hover { background: #9FE1CB; }
+    textarea {
+      width: 100%; min-height: 110px; padding: 12px 14px;
+      font-size: 15px; border: 1px solid #d0d0d0; border-radius: 10px;
+      resize: vertical; font-family: inherit; color: #1a1a1a;
+      background: #fafafa; line-height: 1.6; transition: border-color 0.2s;
+    }
+    textarea:focus { outline: none; border-color: #1D9E75; box-shadow: 0 0 0 3px rgba(29,158,117,0.1); }
+    .btn {
+      width: 100%; margin-top: 12px; padding: 13px;
+      background: #0A6B4F; color: #ffffff; border: none;
+      border-radius: 10px; font-size: 15px; font-weight: 600;
+      cursor: pointer; font-family: inherit; transition: background 0.15s;
+    }
+    .btn:hover { background: #0F6E56; }
+    .btn:disabled { background: #9FE1CB; cursor: not-allowed; }
+    .loading { text-align: center; padding: 2rem; color: #888; font-size: 14px; }
+    .dot { display: inline-block; animation: blink 1.2s infinite; }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink { 0%,80%,100%{opacity:0} 40%{opacity:1} }
+    .result-card { margin-top: 1.5rem; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; }
+    .result-section { padding: 1rem 1.25rem; border-bottom: 1px solid #f0f0f0; }
+    .result-section:last-child { border-bottom: none; }
+    .result-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #1D9E75; margin-bottom: 8px; }
+    .result-text { font-size: 14px; line-height: 1.7; color: #1a1a1a; }
+    .hadith-quote { margin-top: 10px; padding: 10px 14px; background: #f8f8f5; border-radius: 8px; font-size: 13px; font-style: italic; color: #555; line-height: 1.7; }
+    .step { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+    .step-num { min-width: 26px; height: 26px; background: #E1F5EE; color: #085041; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .script-box { background: #E1F5EE; border-left: 3px solid #1D9E75; padding: 12px 16px; font-size: 14px; font-style: italic; color: #085041; line-height: 1.7; border-radius: 0 8px 8px 0; margin-top: 6px; }
+    .source-section { background: #f8fdf9; }
+    .source-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .source-table tr td { padding: 5px 0; }
+    .source-table .key { color: #888; width: 40%; }
+    .source-table .val { color: #1a1a1a; font-weight: 500; text-align: right; }
+    .grade-badge { background: #E1F5EE; color: #085041; font-size: 11px; padding: 2px 10px; border-radius: 999px; font-weight: 600; }
+    .redirect-card { background: #FAEEDA; border: 1px solid #EF9F27; border-radius: 10px; padding: 1rem 1.25rem; margin-top: 1rem; color: #633806; font-size: 14px; line-height: 1.7; }
+    .redirect-card strong { display: block; margin-bottom: 6px; font-size: 15px; }
+    .disclaimer { font-size: 11px; color: #aaa; text-align: center; margin-top: 1.2rem; line-height: 1.6; }
+    .footer { margin-top: 1.5rem; font-size: 12px; color: #aaa; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <span class="arabic">بسم الله الرحمن الرحيم</span>
+      <h1>Adab Coach AI</h1>
+      <p>Prophetic character guidance for modern social challenges</p>
+    </div>
+
+    <div class="body">
+      <p class="examples-label">Try an example or describe your own situation:</p>
+      <div class="examples">
+        <span class="chip" onclick="setExample('My coworker keeps taking credit for my work in meetings.')">Credit at work</span>
+        <span class="chip" onclick="setExample('My non-Muslim neighbour is very loud at night and it is affecting my sleep.')">Loud neighbour</span>
+        <span class="chip" onclick="setExample('A close friend keeps breaking promises and letting me down repeatedly.')">Broken promises</span>
+        <span class="chip" onclick="setExample('My boss speaks to me disrespectfully in front of the whole team.')">Disrespectful boss</span>
+      </div>
+
+      <textarea id="situation" placeholder="Describe your social situation here..."></textarea>
+
+      <button class="btn" id="askBtn" onclick="askAdabCoach()">Ask Adab Coach</button>
+
+      <div id="output"></div>
+
+      <p class="disclaimer">
+        Adab Coach is not a Mufti and does not issue religious rulings.<br>
+        For fatwas and halal/haram questions, consult a qualified scholar.
+      </p>
+    </div>
+  </div>
+
+  <div class="footer">Adab Coach AI &mdash; MVP v1.0</div>
+
+  <script>
+    function setExample(text) {
+      document.getElementById('situation').value = text;
+    }
+
+    const REDIRECT_KEYWORDS = ['haram','halal','fatwa','ruling','permitted','forbidden','divorce','riba','obligatory','fard','is it allowed'];
+
+    function isHardRedirect(text) {
+      return REDIRECT_KEYWORDS.some(k => text.toLowerCase().includes(k));
+    }
+
+    async function askAdabCoach() {
+      const situation = document.getElementById('situation').value.trim();
+      if (!situation) { alert('Please describe your situation first.'); return; }
+
+      const btn = document.getElementById('askBtn');
+      const output = document.getElementById('output');
+
+      btn.disabled = true;
+      btn.textContent = 'Searching Sunnah...';
+
+      if (isHardRedirect(situation)) {
+        output.innerHTML = `<div class="redirect-card"><strong>This looks like a ruling question</strong>Adab Coach handles social character guidance — not halal/haram rulings. Please consult a qualified scholar at <strong>islamqa.info</strong>.</div>`;
+        btn.disabled = false;
+        btn.textContent = 'Ask Adab Coach';
+        return;
+      }
+
+      output.innerHTML = `<div class="loading">Retrieving authentic narrations<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></div>`;
+
+      try {
+        // ✅ Calls YOUR Vercel backend — API key is never exposed to users
+        const response = await fetch('/api/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ situation })
+        });
+
+        const r = await response.json();
+
+        if (r.error) throw new Error(r.error);
+
+        output.innerHTML = `
+          <div class="result-card">
+            <div class="result-section">
+              <div class="result-label">Prophetic principle</div>
+              <div class="result-text">${r.principle}</div>
+              <div class="hadith-quote">"${r.hadith_text}"</div>
+            </div>
+            <div class="result-section">
+              <div class="result-label">Your 3-stage action plan</div>
+              <div class="step"><div class="step-num">1</div><div class="result-text">${r.stage1}</div></div>
+              <div class="step"><div class="step-num">2</div><div class="result-text">${r.stage2}</div></div>
+              <div class="step"><div class="step-num">3</div><div class="result-text">${r.stage3}</div></div>
+            </div>
+            <div class="result-section">
+              <div class="result-label">What you can say</div>
+              <div class="script-box">"${r.script}"</div>
+            </div>
+            <div class="result-section">
+              <div class="result-label">What the Sunnah says to avoid</div>
+              <div class="result-text" style="color:#666;">${r.avoid}</div>
+            </div>
+            <div class="result-section source-section">
+              <div class="result-label">Source check — verified citation</div>
+              <table class="source-table">
+                <tr><td class="key">Collection</td><td class="val">${r.collection}</td></tr>
+                <tr><td class="key">Book</td><td class="val">${r.book}</td></tr>
+                <tr><td class="key">Hadith number</td><td class="val">${r.hadith_number}</td></tr>
+                <tr><td class="key">Grade</td><td class="val"><span class="grade-badge">${r.grade}</span></td></tr>
+                <tr><td class="key">Graded by</td><td class="val">${r.scholar}</td></tr>
+              </table>
+            </div>
+          </div>`;
+
+      } catch (error) {
+        output.innerHTML = `<div class="redirect-card"><strong>Something went wrong</strong>${error.message || 'Please try again.'}</div>`;
+      }
+
+      btn.disabled = false;
+      btn.textContent = 'Ask Adab Coach';
+    }
+  </script>
+
+</body>
+</html>
