@@ -2,214 +2,234 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230A6B4F'/><path d='M50,10 L78,23 L78,53 Q78,75 50,90 Q22,75 22,53 L22,23 Z' fill='none' stroke='%23A8E6CF' stroke-width='2'/><circle cx='46' cy='50' r='14' fill='%23A8E6CF'/><circle cx='52' cy='45' r='11' fill='%230A6B4F'/><polygon transform='translate(64,32)' points='0,-6 1.5,-1.5 6,0 1.5,1.5 0,6 -1.5,1.5 -6,0 -1.5,-1.5' fill='%23A8E6CF'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230A6B4F'/><path d='M50,10 L78,23 L78,53 Q78,75 50,90 Q22,75 22,53 L22,23 Z' fill='none' stroke='%23D4AF37' stroke-width='2'/><circle cx='46' cy='50' r='14' fill='%23D4AF37'/><circle cx='52' cy='45' r='11' fill='%230A6B4F'/><polygon transform='translate(64,32)' points='0,-6 1.5,-1.5 6,0 1.5,1.5 0,6 -1.5,1.5 -6,0 -1.5,-1.5' fill='%23D4AF37'/></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Adab Coach AI</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f4f4f0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem 1rem;
-    }
-    .container {
-      width: 100%;
-      max-width: 680px;
-      background: #ffffff;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid #e0e0e0;
-    }
-    .header {
-      background: #0A6B4F;
-      padding: 2rem 1.5rem;
-      text-align: center;
-    }
-    .header h1 { color: #ffffff; font-size: 26px; font-weight: 600; letter-spacing: -0.3px; }
-    .header .arabic { color: #A8E6CF; font-size: 18px; margin-bottom: 8px; display: block; }
-    .header p { color: #A8E6CF; font-size: 14px; margin-top: 4px; }
-    .body { padding: 1.5rem; }
-    .examples-label { font-size: 13px; color: #666; margin-bottom: 8px; }
-    .examples { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; }
-    .chip {
-      font-size: 12px; padding: 5px 12px;
-      border: 1px solid #1D9E75; border-radius: 999px;
-      color: #085041; background: #E1F5EE;
-      cursor: pointer; transition: background 0.15s;
-    }
-    .chip:hover { background: #9FE1CB; }
-    textarea {
-      width: 100%; min-height: 110px; padding: 12px 14px;
-      font-size: 15px; border: 1px solid #d0d0d0; border-radius: 10px;
-      resize: vertical; font-family: inherit; color: #1a1a1a;
-      background: #fafafa; line-height: 1.6; transition: border-color 0.2s;
-    }
-    textarea:focus { outline: none; border-color: #1D9E75; box-shadow: 0 0 0 3px rgba(29,158,117,0.1); }
-    .btn {
-      width: 100%; margin-top: 12px; padding: 13px;
-      background: #0A6B4F; color: #ffffff; border: none;
-      border-radius: 10px; font-size: 15px; font-weight: 600;
-      cursor: pointer; font-family: inherit; transition: background 0.15s;
-    }
-    .btn:hover { background: #0F6E56; }
-    .btn:disabled { background: #9FE1CB; cursor: not-allowed; }
-    .loading { text-align: center; padding: 2rem; color: #888; font-size: 14px; }
-    .dot { display: inline-block; animation: blink 1.2s infinite; }
-    .dot:nth-child(2) { animation-delay: 0.2s; }
-    .dot:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes blink { 0%,80%,100%{opacity:0} 40%{opacity:1} }
-    .result-card { margin-top: 1.5rem; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; }
-    .result-section { padding: 1rem 1.25rem; border-bottom: 1px solid #f0f0f0; }
-    .result-section:last-child { border-bottom: none; }
-    .result-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #1D9E75; margin-bottom: 8px; }
-    .result-text { font-size: 14px; line-height: 1.7; color: #1a1a1a; }
-    .hadith-quote { margin-top: 10px; padding: 10px 14px; background: #f8f8f5; border-radius: 8px; font-size: 13px; font-style: italic; color: #555; line-height: 1.7; }
-    .step { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
-    .step-num { min-width: 26px; height: 26px; background: #E1F5EE; color: #085041; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-    .script-box { background: #E1F5EE; border-left: 3px solid #1D9E75; padding: 12px 16px; font-size: 14px; font-style: italic; color: #085041; line-height: 1.7; border-radius: 0 8px 8px 0; margin-top: 6px; }
-    .source-section { background: #f8fdf9; }
-    .source-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    .source-table tr td { padding: 5px 0; }
-    .source-table .key { color: #888; width: 40%; }
-    .source-table .val { color: #1a1a1a; font-weight: 500; text-align: right; }
-    .grade-badge { background: #E1F5EE; color: #085041; font-size: 11px; padding: 2px 10px; border-radius: 999px; font-weight: 600; }
-    .redirect-card { background: #FAEEDA; border: 1px solid #EF9F27; border-radius: 10px; padding: 1rem 1.25rem; margin-top: 1rem; color: #633806; font-size: 14px; line-height: 1.7; }
-    .redirect-card strong { display: block; margin-bottom: 6px; font-size: 15px; }
-    .disclaimer { font-size: 11px; color: #aaa; text-align: center; margin-top: 1.2rem; line-height: 1.6; }
-    .footer { margin-top: 1.5rem; font-size: 12px; color: #aaa; text-align: center; }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f4f0;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:2rem 1rem;position:relative;overflow-x:hidden;}
+    body svg.pat{position:fixed;top:0;left:0;width:100%;height:100%;opacity:0.05;pointer-events:none;z-index:0;}
+    .container{width:100%;max-width:680px;background:#fff;border-radius:16px;overflow:hidden;border:1px solid #e0e0e0;position:relative;z-index:10;}
+    .header{background:#0A6B4F;padding:2rem 1.5rem;text-align:center;position:relative;overflow:hidden;}
+    .header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#D4AF37,#FFD700,#D4AF37,transparent);}
+    .header .arabic{color:#D4AF37;font-size:18px;margin-bottom:8px;display:block;}
+    .header h1{color:#fff;font-size:26px;font-weight:600;letter-spacing:-0.3px;margin-top:6px;}
+    .header h1 span{color:#D4AF37;}
+    .header p{color:#D4AF37;font-size:14px;margin-top:4px;opacity:0.85;}
+    .body{padding:1.5rem;}
+    .lang-toggle{display:flex;gap:8px;margin-bottom:1.2rem;}
+    .lang-btn{padding:5px 18px;border-radius:999px;border:1px solid #D4AF37;background:transparent;color:#B8860B;font-size:12px;cursor:pointer;font-family:inherit;transition:all 0.2s;}
+    .lang-btn.active{background:#D4AF37;color:#0A3D1F;font-weight:600;}
+    .lbl{font-size:13px;color:#666;margin-bottom:8px;}
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem;}
+    .chip{font-size:12px;padding:5px 12px;border:1px solid #D4AF37;border-radius:999px;color:#B8860B;background:#FFFBEA;cursor:pointer;transition:background 0.15s;}
+    .chip:hover,.chip.active{background:#FFF0A0;}
+    textarea{width:100%;min-height:110px;padding:12px 14px;font-size:15px;border:1px solid #d0d0d0;border-radius:10px;resize:vertical;font-family:inherit;color:#1a1a1a;background:#fafafa;line-height:1.6;transition:border-color 0.2s;}
+    textarea:focus{outline:none;border-color:#D4AF37;box-shadow:0 0 0 3px rgba(212,175,55,0.15);}
+    textarea[dir="rtl"]{font-size:16px;font-family:serif;}
+    .btn{width:100%;margin-top:12px;padding:13px;background:linear-gradient(135deg,#B8860B,#D4AF37,#B8860B);color:#0A3D1F;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:0.2px;transition:opacity 0.15s;}
+    .btn:hover{opacity:0.9;}
+    .btn:disabled{opacity:0.5;cursor:not-allowed;}
+    .loading{text-align:center;padding:2rem;color:#888;font-size:14px;}
+    .dot{display:inline-block;animation:blink 1.2s infinite;}
+    .dot:nth-child(2){animation-delay:0.2s;}
+    .dot:nth-child(3){animation-delay:0.4s;}
+    @keyframes blink{0%,80%,100%{opacity:0}40%{opacity:1}}
+    .result-card{margin-top:1.5rem;border:1px solid #e0e0e0;border-radius:12px;overflow:hidden;}
+    .result-sec{padding:1rem 1.25rem;border-bottom:1px solid #f0f0f0;}
+    .result-sec:last-child{border-bottom:none;}
+    .sec-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#B8860B;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+    .sec-label::before{content:'';display:inline-block;width:3px;height:11px;background:linear-gradient(#D4AF37,#B8860B);border-radius:2px;}
+    .sec-text{font-size:14px;line-height:1.7;color:#1a1a1a;}
+    .hadith-box{margin-top:10px;padding:10px 14px;background:#FFFBEA;border-left:3px solid #D4AF37;border-radius:0 8px 8px 0;font-size:13px;font-style:italic;color:#B8860B;line-height:1.7;}
+    .step{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start;}
+    .step-num{min-width:26px;height:26px;background:linear-gradient(135deg,#B8860B,#D4AF37);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:1px;}
+    .script-box{background:#FFFBEA;border-left:3px solid #D4AF37;padding:12px 16px;font-size:14px;font-style:italic;color:#B8860B;line-height:1.7;border-radius:0 8px 8px 0;margin-top:6px;}
+    .src{background:#fffdf0;}
+    .tbl{width:100%;border-collapse:collapse;font-size:13px;}
+    .tbl td{padding:5px 0;}
+    .tbl .k{color:#888;width:40%;}
+    .tbl .v{color:#1a1a1a;font-weight:500;text-align:right;}
+    .badge{background:#FFFBEA;color:#B8860B;font-size:11px;padding:2px 10px;border-radius:999px;font-weight:600;border:1px solid #D4AF37;}
+    .disc{font-size:11px;color:#aaa;text-align:center;margin-top:1.2rem;line-height:1.6;}
+    .footer{margin-top:1.5rem;font-size:12px;color:#aaa;text-align:center;position:relative;z-index:10;}
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <div class="header">
-      <span class="arabic">بسم الله الرحمن الرحيم</span>
-      <svg viewBox="0 0 100 120" width="55" height="66" xmlns="http://www.w3.org/2000/svg">
-  <line x1="50" y1="8" x2="50" y2="3" stroke="#A8E6CF" stroke-width="2"/>
-  <circle cx="50" cy="2" r="2.5" fill="#A8E6CF"/>
-  <path d="M33,28 Q50,16 67,28" fill="none" stroke="#A8E6CF" stroke-width="2"/>
-  <rect x="33" y="28" width="34" height="48" rx="5" fill="none" stroke="#A8E6CF" stroke-width="2"/>
-  <rect x="38" y="33" width="24" height="38" rx="3" fill="#A8E6CF" opacity="0.12"/>
-  <text x="50" y="57" text-anchor="middle" font-family="serif" font-size="20" fill="#A8E6CF" font-weight="bold">اَدب</text>
-  <path d="M33,76 Q50,88 67,76" fill="none" stroke="#A8E6CF" stroke-width="2"/>
-  <line x1="50" y1="88" x2="50" y2="94" stroke="#A8E6CF" stroke-width="2"/>
-  <ellipse cx="50" cy="96" rx="3" ry="4" fill="#A8E6CF" opacity="0.7"/>
+<!-- Islamic pattern background -->
+<svg class="pat" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="gp" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+      <polygon points="40,4 46,22 64,16 52,30 68,36 50,40 68,44 52,50 64,64 46,58 40,76 34,58 16,64 28,50 12,44 30,40 12,36 28,30 16,16 34,22" fill="none" stroke="#0A6B4F" stroke-width="0.8"/>
+      <rect x="29" y="29" width="22" height="22" transform="rotate(45 40 40)" fill="none" stroke="#D4AF37" stroke-width="0.5"/>
+      <circle cx="40" cy="40" r="4" fill="none" stroke="#0A6B4F" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#gp)"/>
 </svg>
-      <h1>Adab Coach AI</h1>
-      <p>Prophetic character guidance for modern social challenges</p>
-    </div>
 
-    <div class="body">
-      <p class="examples-label">Try an example or describe your own situation:</p>
-      <div class="examples">
-        <span class="chip" onclick="setExample('My coworker keeps taking credit for my work in meetings.')">Credit at work</span>
-        <span class="chip" onclick="setExample('My non-Muslim neighbour is very loud at night and it is affecting my sleep.')">Loud neighbour</span>
-        <span class="chip" onclick="setExample('A close friend keeps breaking promises and letting me down repeatedly.')">Broken promises</span>
-        <span class="chip" onclick="setExample('My boss speaks to me disrespectfully in front of the whole team.')">Disrespectful boss</span>
-      </div>
-
-      <textarea id="situation" placeholder="Describe your social situation here..."></textarea>
-
-      <button class="btn" id="askBtn" onclick="askAdabCoach()">Ask Adab Coach</button>
-
-      <div id="output"></div>
-
-      <p class="disclaimer">
-        Adab Coach is not a Mufti and does not issue religious rulings.<br>
-        For fatwas and halal/haram questions, consult a qualified scholar.
-      </p>
-    </div>
+<div class="container">
+  <div class="header">
+    <span class="arabic">بسم الله الرحمن الرحيم</span>
+    <!-- Shield Moon Logo -->
+    <svg viewBox="0 0 100 100" width="70" height="70" xmlns="http://www.w3.org/2000/svg" style="margin:8px auto 4px;display:block;">
+      <circle cx="50" cy="50" r="44" fill="none" stroke="#D4AF37" stroke-width="0.5" opacity="0.4" stroke-dasharray="4,3"/>
+      <path d="M50,12 L78,25 L78,55 Q78,77 50,90 Q22,77 22,55 L22,25 Z" fill="rgba(212,175,55,0.08)" stroke="#D4AF37" stroke-width="1.5"/>
+      <path d="M50,20 L72,31 L72,55 Q72,72 50,82 Q28,72 28,55 L28,31 Z" fill="none" stroke="#D4AF37" stroke-width="0.5" opacity="0.4"/>
+      <circle cx="46" cy="52" r="16" fill="#D4AF37"/>
+      <circle cx="53" cy="46" r="13" fill="#0A6B4F"/>
+      <polygon transform="translate(65,34)" points="0,-7 2,-2 7,0 2,2 0,7 -2,2 -7,0 -2,-2" fill="#D4AF37"/>
+      <line x1="38" y1="72" x2="62" y2="72" stroke="#D4AF37" stroke-width="0.8" opacity="0.5"/>
+      <circle cx="50" cy="72" r="1.5" fill="#D4AF37" opacity="0.7"/>
+    </svg>
+    <h1>Adab Coach <span>AI</span></h1>
+    <p id="subtitle">Prophetic character guidance for modern social challenges</p>
   </div>
 
-  <div class="footer">Adab Coach AI &mdash; MVP v1.0</div>
+  <div class="body">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">English</button>
+      <button class="lang-btn" onclick="setLang('ur')">اردو</button>
+    </div>
+    <p class="lbl" id="clbl">Try an example or describe your own situation:</p>
+    <div class="chips" id="chips">
+      <span class="chip" onclick="set(this,'My coworker keeps taking credit for my work in meetings.')">Credit at work</span>
+      <span class="chip" onclick="set(this,'My non-Muslim neighbour is very loud at night and it is affecting my sleep.')">Loud neighbour</span>
+      <span class="chip" onclick="set(this,'A close friend keeps breaking promises and letting me down repeatedly.')">Broken promises</span>
+      <span class="chip" onclick="set(this,'My boss speaks to me disrespectfully in front of the whole team.')">Disrespectful boss</span>
+    </div>
+    <textarea id="sit" placeholder="Describe your social situation here..."></textarea>
+    <button class="btn" id="btn" onclick="askAdabCoach()">✦ Ask Adab Coach</button>
+    <div id="output"></div>
+    <p class="disc" id="disc">Adab Coach is not a Mufti and does not issue religious rulings.<br>For fatwas and halal/haram questions, consult a qualified scholar.</p>
+  </div>
+</div>
 
-  <script>
-    function setExample(text) {
-      document.getElementById('situation').value = text;
+<div class="footer">Adab Coach AI &mdash; MVP v2.0</div>
+
+<script>
+  let lang = 'en';
+
+  const T = {
+    en: {
+      subtitle: 'Prophetic character guidance for modern social challenges',
+      clbl: 'Try an example or describe your own situation:',
+      chips: ['Credit at work','Loud neighbour','Broken promises','Disrespectful boss'],
+      sits: [
+        'My coworker keeps taking credit for my work in meetings.',
+        'My non-Muslim neighbour is very loud at night and it is affecting my sleep.',
+        'A close friend keeps breaking promises and letting me down repeatedly.',
+        'My boss speaks to me disrespectfully in front of the whole team.'
+      ],
+      ph: 'Describe your social situation here...',
+      btn: '✦ Ask Adab Coach',
+      load: 'Retrieving authentic narrations',
+      disc: 'Adab Coach is not a Mufti and does not issue religious rulings.<br>For fatwas and halal/haram questions, consult a qualified scholar.'
+    },
+    ur: {
+      subtitle: 'جدید سماجی مسائل کے لیے نبوی اخلاق کی رہنمائی',
+      clbl: 'مثال منتخب کریں یا اپنی صورتحال بیان کریں:',
+      chips: ['کام پر ظلم','شور مچانے والا پڑوسی','وعدہ خلافی','بے عزتی کرنے والا باس'],
+      sits: [
+        'میرا ساتھی کارکن میٹنگ میں میرے کام کا کریڈٹ لے لیتا ہے۔',
+        'میرا غیر مسلم پڑوسی رات کو بہت شور مچاتا ہے۔',
+        'میرا دوست بار بار وعدہ توڑتا ہے۔',
+        'میرا باس سب کے سامنے مجھ سے بے عزتی سے پیش آتا ہے۔'
+      ],
+      ph: 'اپنی صورتحال یہاں بیان کریں...',
+      btn: '✦ ادب کوچ سے پوچھیں',
+      load: 'مستند احادیث تلاش کی جا رہی ہیں',
+      disc: 'ادب کوچ مفتی نہیں ہے۔<br>فتوے کے لیے کسی عالم سے رجوع کریں۔'
+    }
+  };
+
+  function setLang(l) {
+    lang = l;
+    const t = T[l];
+    document.getElementById('subtitle').textContent = t.subtitle;
+    document.getElementById('clbl').textContent = t.clbl;
+    document.getElementById('disc').innerHTML = t.disc;
+    document.getElementById('btn').textContent = t.btn;
+    const sit = document.getElementById('sit');
+    sit.placeholder = t.ph;
+    sit.dir = l === 'ur' ? 'rtl' : 'ltr';
+    const chips = document.getElementById('chips');
+    chips.innerHTML = '';
+    t.chips.forEach((c, i) => {
+      const el = document.createElement('span');
+      el.className = 'chip';
+      el.textContent = c;
+      el.onclick = () => set(el, t.sits[i]);
+      chips.appendChild(el);
+    });
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.lang-btn')[l === 'en' ? 0 : 1].classList.add('active');
+    document.getElementById('output').innerHTML = '';
+  }
+
+  function set(el, t) {
+    document.getElementById('sit').value = t;
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  const REDIRECT_KEYWORDS = ['haram','halal','fatwa','ruling','permitted','forbidden','divorce','riba','obligatory','fard','is it allowed'];
+  function isHardRedirect(text) {
+    return REDIRECT_KEYWORDS.some(k => text.toLowerCase().includes(k));
+  }
+
+  async function askAdabCoach() {
+    const situation = document.getElementById('sit').value.trim();
+    if (!situation) { alert('Please describe your situation first.'); return; }
+    const btn = document.getElementById('btn');
+    const output = document.getElementById('output');
+    const t = T[lang];
+
+    if (isHardRedirect(situation)) {
+      output.innerHTML = `<div style="background:#FAEEDA;border:1px solid #EF9F27;border-radius:10px;padding:1rem 1.25rem;margin-top:1rem;color:#633806;font-size:14px;line-height:1.7;"><strong style="display:block;margin-bottom:6px;font-size:15px;">This looks like a ruling question</strong>Adab Coach handles social character guidance — not halal/haram rulings. Please consult a qualified scholar at <strong>islamqa.info</strong>.</div>`;
+      return;
     }
 
-    const REDIRECT_KEYWORDS = ['haram','halal','fatwa','ruling','permitted','forbidden','divorce','riba','obligatory','fard','is it allowed'];
+    btn.disabled = true;
+    btn.textContent = 'Searching...';
+    output.innerHTML = `<div class="loading">${t.load}<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></div>`;
 
-    function isHardRedirect(text) {
-      return REDIRECT_KEYWORDS.some(k => text.toLowerCase().includes(k));
+    try {
+      const response = await fetch('/api/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ situation })
+      });
+      const r = await response.json();
+      if (r.error) throw new Error(r.error);
+
+      output.innerHTML = `
+        <div class="result-card">
+          <div class="result-sec"><div class="sec-label">Prophetic Principle</div><div class="sec-text">${r.principle}</div><div class="hadith-box">"${r.hadith_text}"</div></div>
+          <div class="result-sec"><div class="sec-label">Your 3-Stage Action Plan</div>
+            <div class="step"><div class="step-num">1</div><div class="sec-text">${r.stage1}</div></div>
+            <div class="step"><div class="step-num">2</div><div class="sec-text">${r.stage2}</div></div>
+            <div class="step"><div class="step-num">3</div><div class="sec-text">${r.stage3}</div></div>
+          </div>
+          <div class="result-sec"><div class="sec-label">What You Can Say</div><div class="script-box">"${r.script}"</div></div>
+          <div class="result-sec"><div class="sec-label">What the Sunnah Says to Avoid</div><div class="sec-text" style="color:#666">${r.avoid}</div></div>
+          <div class="result-sec src"><div class="sec-label">Source Check — Verified Citation</div>
+            <table class="tbl">
+              <tr><td class="k">Collection</td><td class="v">${r.collection}</td></tr>
+              <tr><td class="k">Book</td><td class="v">${r.book}</td></tr>
+              <tr><td class="k">Hadith No.</td><td class="v">${r.hadith_number}</td></tr>
+              <tr><td class="k">Grade</td><td class="v"><span class="badge">${r.grade}</span></td></tr>
+              <tr><td class="k">Graded by</td><td class="v">${r.scholar}</td></tr>
+            </table>
+          </div>
+        </div>`;
+    } catch (error) {
+      output.innerHTML = `<div style="background:#FAEEDA;border:1px solid #EF9F27;border-radius:10px;padding:1rem 1.25rem;margin-top:1rem;color:#633806;font-size:14px;"><strong style="display:block;margin-bottom:6px;">Something went wrong</strong>${error.message || 'Please try again.'}</div>`;
     }
-
-    async function askAdabCoach() {
-      const situation = document.getElementById('situation').value.trim();
-      if (!situation) { alert('Please describe your situation first.'); return; }
-
-      const btn = document.getElementById('askBtn');
-      const output = document.getElementById('output');
-
-      btn.disabled = true;
-      btn.textContent = 'Searching Sunnah...';
-
-      if (isHardRedirect(situation)) {
-        output.innerHTML = `<div class="redirect-card"><strong>This looks like a ruling question</strong>Adab Coach handles social character guidance — not halal/haram rulings. Please consult a qualified scholar at <strong>islamqa.info</strong>.</div>`;
-        btn.disabled = false;
-        btn.textContent = 'Ask Adab Coach';
-        return;
-      }
-
-      output.innerHTML = `<div class="loading">Retrieving authentic narrations<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></div>`;
-
-      try {
-        // ✅ Calls YOUR Vercel backend — API key is never exposed to users
-        const response = await fetch('/api/ask', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ situation })
-        });
-
-        const r = await response.json();
-
-        if (r.error) throw new Error(r.error);
-
-        output.innerHTML = `
-          <div class="result-card">
-            <div class="result-section">
-              <div class="result-label">Prophetic principle</div>
-              <div class="result-text">${r.principle}</div>
-              <div class="hadith-quote">"${r.hadith_text}"</div>
-            </div>
-            <div class="result-section">
-              <div class="result-label">Your 3-stage action plan</div>
-              <div class="step"><div class="step-num">1</div><div class="result-text">${r.stage1}</div></div>
-              <div class="step"><div class="step-num">2</div><div class="result-text">${r.stage2}</div></div>
-              <div class="step"><div class="step-num">3</div><div class="result-text">${r.stage3}</div></div>
-            </div>
-            <div class="result-section">
-              <div class="result-label">What you can say</div>
-              <div class="script-box">"${r.script}"</div>
-            </div>
-            <div class="result-section">
-              <div class="result-label">What the Sunnah says to avoid</div>
-              <div class="result-text" style="color:#666;">${r.avoid}</div>
-            </div>
-            <div class="result-section source-section">
-              <div class="result-label">Source check — verified citation</div>
-              <table class="source-table">
-                <tr><td class="key">Collection</td><td class="val">${r.collection}</td></tr>
-                <tr><td class="key">Book</td><td class="val">${r.book}</td></tr>
-                <tr><td class="key">Hadith number</td><td class="val">${r.hadith_number}</td></tr>
-                <tr><td class="key">Grade</td><td class="val"><span class="grade-badge">${r.grade}</span></td></tr>
-                <tr><td class="key">Graded by</td><td class="val">${r.scholar}</td></tr>
-              </table>
-            </div>
-          </div>`;
-
-      } catch (error) {
-        output.innerHTML = `<div class="redirect-card"><strong>Something went wrong</strong>${error.message || 'Please try again.'}</div>`;
-      }
-
-      btn.disabled = false;
-      btn.textContent = 'Ask Adab Coach';
-    }
-  </script>
-
+    btn.disabled = false;
+    btn.textContent = T[lang].btn;
+  }
+</script>
 </body>
 </html>
