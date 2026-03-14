@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-  // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -35,18 +34,19 @@ Return this exact JSON structure:
 }`;
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,  // ← stored safely in Vercel
-        'anthropic-version': '2023-06-01'
+        'Authorization': `Bearer ${process.env.GROQ_API_KEY}`
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-5',
+        model: 'llama3-70b-8192',
         max_tokens: 1000,
-        system: systemPrompt,
-        messages: [{ role: 'user', content: `My situation: ${situation}` }]
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: `My situation: ${situation}` }
+        ]
       })
     });
 
@@ -56,7 +56,7 @@ Return this exact JSON structure:
       return res.status(500).json({ error: data.error.message });
     }
 
-    const rawText = data.content[0].text;
+    const rawText = data.choices[0].message.content;
     const cleanText = rawText.replace(/```json|```/g, '').trim();
     const parsed = JSON.parse(cleanText);
 
