@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230A6B4F'/><path d='M50,10 L78,23 L78,53 Q78,75 50,90 Q22,75 22,53 L22,23 Z' fill='none' stroke='%23D4AF37' stroke-width='2'/><circle cx='46' cy='50' r='14' fill='%23D4AF37'/><circle cx='52' cy='45' r='11' fill='%230A6B4F'/><polygon transform='translate(64,32)' points='0,-6 1.5,-1.5 6,0 1.5,1.5 0,6 -1.5,1.5 -6,0 -1.5,-1.5' fill='%23D4AF37'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230A6B4F'/><path d='M50,10 L78,23 L78,53 Q78,75 50,90 Q22,75 22,53 L22,23 Z' fill='none' stroke='%23FFE9A0' stroke-width='2'/><circle cx='46' cy='50' r='14' fill='%23FFE9A0'/><circle cx='52' cy='45' r='11' fill='%230A6B4F'/><polygon transform='translate(64,32)' points='0,-6 1.5,-1.5 6,0 1.5,1.5 0,6 -1.5,1.5 -6,0 -1.5,-1.5' fill='%23FFE9A0'/></svg>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Adab Coach AI</title>
   <style>
@@ -11,23 +11,27 @@
     body svg.pat{position:fixed;top:0;left:0;width:100%;height:100%;opacity:0.05;pointer-events:none;z-index:0;}
     .container{width:100%;max-width:680px;background:#fff;border-radius:16px;overflow:hidden;border:1px solid #e0e0e0;position:relative;z-index:10;}
     .header{background:#0A6B4F;padding:2rem 1.5rem;text-align:center;position:relative;overflow:hidden;}
-    .header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#D4AF37,#FFD700,#D4AF37,transparent);}
-    .header .arabic{color:#D4AF37;font-size:18px;margin-bottom:8px;display:block;}
+    .header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#FFE9A0,#F5D98A,#FFE9A0,transparent);}
+    .header .arabic{color:#FFE9A0;font-size:18px;margin-bottom:8px;display:block;}
     .header h1{color:#fff;font-size:26px;font-weight:600;letter-spacing:-0.3px;margin-top:6px;}
-    .header h1 span{color:#D4AF37;}
-    .header p{color:#D4AF37;font-size:14px;margin-top:4px;opacity:0.85;}
+    .header h1 span{color:#FFE9A0;}
+    .header p{color:#FFE9A0;font-size:14px;margin-top:4px;opacity:0.85;}
     .body{padding:1.5rem;}
     .lang-toggle{display:flex;gap:8px;margin-bottom:1.2rem;}
-    .lang-btn{padding:5px 18px;border-radius:999px;border:1px solid #D4AF37;background:transparent;color:#B8860B;font-size:12px;cursor:pointer;font-family:inherit;transition:all 0.2s;}
-    .lang-btn.active{background:#D4AF37;color:#0A3D1F;font-weight:600;}
+    .lang-btn{padding:5px 18px;border-radius:999px;border:1px solid #F5D98A;background:transparent;color:#9A7B00;font-size:12px;cursor:pointer;font-family:inherit;transition:all 0.2s;}
+    .lang-btn.active{background:#F5D98A;color:#0A3D1F;font-weight:600;}
     .lbl{font-size:13px;color:#666;margin-bottom:8px;}
-    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem;}
-    .chip{font-size:12px;padding:5px 12px;border:1px solid #D4AF37;border-radius:999px;color:#B8860B;background:#FFFBEA;cursor:pointer;transition:background 0.15s;}
-    .chip:hover,.chip.active{background:#FFF0A0;}
+    .chips-wrap{margin-bottom:1rem;}
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px;}
+    .chip{font-size:12px;padding:5px 12px;border:1px solid #F5D98A;border-radius:999px;color:#9A7B00;background:#FFFDF0;cursor:pointer;transition:background 0.15s;}
+    .chip:hover,.chip.active{background:#FFF7C0;}
+    .show-more{font-size:12px;color:#0A6B4F;cursor:pointer;background:none;border:none;font-family:inherit;padding:2px 0;text-decoration:underline;}
+    .extra-chips{display:none;flex-wrap:wrap;gap:8px;margin-top:6px;}
+    .extra-chips.open{display:flex;}
     textarea{width:100%;min-height:110px;padding:12px 14px;font-size:15px;border:1px solid #d0d0d0;border-radius:10px;resize:vertical;font-family:inherit;color:#1a1a1a;background:#fafafa;line-height:1.6;transition:border-color 0.2s;}
-    textarea:focus{outline:none;border-color:#D4AF37;box-shadow:0 0 0 3px rgba(212,175,55,0.15);}
+    textarea:focus{outline:none;border-color:#F5D98A;box-shadow:0 0 0 3px rgba(245,217,138,0.2);}
     textarea[dir="rtl"]{font-size:16px;font-family:serif;}
-    .btn{width:100%;margin-top:12px;padding:13px;background:linear-gradient(135deg,#B8860B,#D4AF37,#B8860B);color:#0A3D1F;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:0.2px;transition:opacity 0.15s;}
+    .btn{width:100%;margin-top:12px;padding:13px;background:linear-gradient(135deg,#F0C840,#F5D98A,#F0C840);color:#0A3D1F;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:0.2px;transition:opacity 0.15s;}
     .btn:hover{opacity:0.9;}
     .btn:disabled{opacity:0.5;cursor:not-allowed;}
     .loading{text-align:center;padding:2rem;color:#888;font-size:14px;}
@@ -38,50 +42,76 @@
     .result-card{margin-top:1.5rem;border:1px solid #e0e0e0;border-radius:12px;overflow:hidden;}
     .result-sec{padding:1rem 1.25rem;border-bottom:1px solid #f0f0f0;}
     .result-sec:last-child{border-bottom:none;}
-    .sec-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#B8860B;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
-    .sec-label::before{content:'';display:inline-block;width:3px;height:11px;background:linear-gradient(#D4AF37,#B8860B);border-radius:2px;}
+    .sec-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#9A7B00;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+    .sec-label::before{content:'';display:inline-block;width:3px;height:11px;background:linear-gradient(#F5D98A,#F0C840);border-radius:2px;}
     .sec-text{font-size:14px;line-height:1.7;color:#1a1a1a;}
-    .hadith-box{margin-top:10px;padding:10px 14px;background:#FFFBEA;border-left:3px solid #D4AF37;border-radius:0 8px 8px 0;font-size:13px;font-style:italic;color:#B8860B;line-height:1.7;}
+    .hadith-box{margin-top:10px;padding:10px 14px;background:#FFFDF0;border-left:3px solid #F5D98A;border-radius:0 8px 8px 0;font-size:13px;font-style:italic;color:#9A7B00;line-height:1.7;}
     .step{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start;}
-    .step-num{min-width:26px;height:26px;background:linear-gradient(135deg,#B8860B,#D4AF37);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:1px;}
-    .script-box{background:#FFFBEA;border-left:3px solid #D4AF37;padding:12px 16px;font-size:14px;font-style:italic;color:#B8860B;line-height:1.7;border-radius:0 8px 8px 0;margin-top:6px;}
-    .src{background:#fffdf0;}
+    .step-num{min-width:26px;height:26px;background:linear-gradient(135deg,#F0C840,#F5D98A);color:#0A3D1F;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:1px;}
+    .script-box{background:#FFFDF0;border-left:3px solid #F5D98A;padding:12px 16px;font-size:14px;font-style:italic;color:#9A7B00;line-height:1.7;border-radius:0 8px 8px 0;margin-top:6px;}
+    .src{background:#fffef5;}
     .tbl{width:100%;border-collapse:collapse;font-size:13px;}
     .tbl td{padding:5px 0;}
     .tbl .k{color:#888;width:40%;}
     .tbl .v{color:#1a1a1a;font-weight:500;text-align:right;}
-    .badge{background:#FFFBEA;color:#B8860B;font-size:11px;padding:2px 10px;border-radius:999px;font-weight:600;border:1px solid #D4AF37;}
+    .badge{background:#FFFDF0;color:#9A7B00;font-size:11px;padding:2px 10px;border-radius:999px;font-weight:600;border:1px solid #F5D98A;}
+    /* Action buttons */
+    .action-bar{display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap;}
+    .action-btn{flex:1;min-width:120px;padding:10px 12px;border-radius:8px;border:1px solid #e0e0e0;background:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:6px;}
+    .action-btn:hover{background:#f5f5f5;}
+    .action-btn.whatsapp{background:#25D366;color:#fff;border-color:#25D366;}
+    .action-btn.whatsapp:hover{background:#20BA5A;}
+    .action-btn.copy{background:#FFFDF0;color:#9A7B00;border-color:#F5D98A;}
+    .action-btn.copy:hover{background:#FFF7C0;}
+    .action-btn.save{background:#f0f7ff;color:#1D4ED8;border-color:#BFDBFE;}
+    .action-btn.save:hover{background:#e0f0ff;}
+    .action-btn.print{background:#f5f5f5;color:#444;border-color:#ddd;}
+    /* Rating */
+    .rating-bar{display:flex;align-items:center;gap:12px;margin-top:1rem;padding:12px 14px;background:#f9f9f9;border-radius:10px;border:1px solid #f0f0f0;}
+    .rating-bar p{font-size:13px;color:#666;flex:1;}
+    .rate-btn{padding:6px 16px;border-radius:999px;border:1px solid #e0e0e0;background:#fff;font-size:13px;cursor:pointer;transition:all 0.15s;}
+    .rate-btn:hover{background:#f0f0f0;}
+    .rate-btn.liked{background:#E1F5EE;border-color:#1D9E75;color:#0A6B4F;}
+    .rate-btn.disliked{background:#FEE2E2;border-color:#EF4444;color:#B91C1C;}
+    /* Saved section */
+    .saved-section{margin-top:1.5rem;border:1px solid #F5D98A;border-radius:12px;overflow:hidden;display:none;}
+    .saved-header{background:#FFFDF0;padding:10px 16px;font-size:13px;font-weight:600;color:#9A7B00;display:flex;justify-content:space-between;align-items:center;}
+    .saved-item{padding:10px 16px;border-top:1px solid #f5f0e0;font-size:13px;color:#444;cursor:pointer;transition:background 0.15s;display:flex;justify-content:space-between;align-items:center;}
+    .saved-item:hover{background:#FFFDF0;}
+    .saved-item .del{color:#aaa;font-size:16px;cursor:pointer;}
     .disc{font-size:11px;color:#aaa;text-align:center;margin-top:1.2rem;line-height:1.6;}
     .footer{margin-top:1.5rem;font-size:12px;color:#aaa;text-align:center;position:relative;z-index:10;}
+    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0A6B4F;color:#fff;padding:10px 24px;border-radius:999px;font-size:13px;font-weight:500;z-index:999;opacity:0;transition:opacity 0.3s;pointer-events:none;}
+    .toast.show{opacity:1;}
   </style>
 </head>
 <body>
 
-<!-- Islamic pattern background -->
 <svg class="pat" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <pattern id="gp" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
       <polygon points="40,4 46,22 64,16 52,30 68,36 50,40 68,44 52,50 64,64 46,58 40,76 34,58 16,64 28,50 12,44 30,40 12,36 28,30 16,16 34,22" fill="none" stroke="#0A6B4F" stroke-width="0.8"/>
-      <rect x="29" y="29" width="22" height="22" transform="rotate(45 40 40)" fill="none" stroke="#D4AF37" stroke-width="0.5"/>
+      <rect x="29" y="29" width="22" height="22" transform="rotate(45 40 40)" fill="none" stroke="#F5D98A" stroke-width="0.5"/>
       <circle cx="40" cy="40" r="4" fill="none" stroke="#0A6B4F" stroke-width="0.5"/>
     </pattern>
   </defs>
   <rect width="100%" height="100%" fill="url(#gp)"/>
 </svg>
 
+<div class="toast" id="toast"></div>
+
 <div class="container">
   <div class="header">
     <span class="arabic">بسم الله الرحمن الرحيم</span>
-    <!-- Shield Moon Logo -->
     <svg viewBox="0 0 100 100" width="70" height="70" xmlns="http://www.w3.org/2000/svg" style="margin:8px auto 4px;display:block;">
-      <circle cx="50" cy="50" r="44" fill="none" stroke="#D4AF37" stroke-width="0.5" opacity="0.4" stroke-dasharray="4,3"/>
-      <path d="M50,12 L78,25 L78,55 Q78,77 50,90 Q22,77 22,55 L22,25 Z" fill="rgba(212,175,55,0.08)" stroke="#D4AF37" stroke-width="1.5"/>
-      <path d="M50,20 L72,31 L72,55 Q72,72 50,82 Q28,72 28,55 L28,31 Z" fill="none" stroke="#D4AF37" stroke-width="0.5" opacity="0.4"/>
-      <circle cx="46" cy="52" r="16" fill="#D4AF37"/>
+      <circle cx="50" cy="50" r="44" fill="none" stroke="#FFE9A0" stroke-width="0.5" opacity="0.4" stroke-dasharray="4,3"/>
+      <path d="M50,12 L78,25 L78,55 Q78,77 50,90 Q22,77 22,55 L22,25 Z" fill="rgba(255,233,160,0.08)" stroke="#FFE9A0" stroke-width="1.5"/>
+      <path d="M50,20 L72,31 L72,55 Q72,72 50,82 Q28,72 28,55 L28,31 Z" fill="none" stroke="#FFE9A0" stroke-width="0.5" opacity="0.4"/>
+      <circle cx="46" cy="52" r="16" fill="#FFE9A0"/>
       <circle cx="53" cy="46" r="13" fill="#0A6B4F"/>
-      <polygon transform="translate(65,34)" points="0,-7 2,-2 7,0 2,2 0,7 -2,2 -7,0 -2,-2" fill="#D4AF37"/>
-      <line x1="38" y1="72" x2="62" y2="72" stroke="#D4AF37" stroke-width="0.8" opacity="0.5"/>
-      <circle cx="50" cy="72" r="1.5" fill="#D4AF37" opacity="0.7"/>
+      <polygon transform="translate(65,34)" points="0,-7 2,-2 7,0 2,2 0,7 -2,2 -7,0 -2,-2" fill="#FFE9A0"/>
+      <line x1="38" y1="72" x2="62" y2="72" stroke="#FFE9A0" stroke-width="0.8" opacity="0.5"/>
+      <circle cx="50" cy="72" r="1.5" fill="#FFE9A0" opacity="0.7"/>
     </svg>
     <h1>Adab Coach <span>AI</span></h1>
     <p id="subtitle">Prophetic character guidance for modern social challenges</p>
@@ -92,16 +122,27 @@
       <button class="lang-btn active" onclick="setLang('en')">English</button>
       <button class="lang-btn" onclick="setLang('ur')">اردو</button>
     </div>
+
     <p class="lbl" id="clbl">Try an example or describe your own situation:</p>
-    <div class="chips" id="chips">
-      <span class="chip" onclick="set(this,'My coworker keeps taking credit for my work in meetings.')">Credit at work</span>
-      <span class="chip" onclick="set(this,'My non-Muslim neighbour is very loud at night and it is affecting my sleep.')">Loud neighbour</span>
-      <span class="chip" onclick="set(this,'A close friend keeps breaking promises and letting me down repeatedly.')">Broken promises</span>
-      <span class="chip" onclick="set(this,'My boss speaks to me disrespectfully in front of the whole team.')">Disrespectful boss</span>
+    <div class="chips-wrap">
+      <div class="chips" id="chips"></div>
+      <button class="show-more" id="showMoreBtn" onclick="toggleMore()">+ Show more examples</button>
+      <div class="extra-chips" id="extraChips"></div>
     </div>
+
     <textarea id="sit" placeholder="Describe your social situation here..."></textarea>
     <button class="btn" id="btn" onclick="askAdabCoach()">✦ Ask Adab Coach</button>
     <div id="output"></div>
+
+    <!-- Saved Section -->
+    <div class="saved-section" id="savedSection">
+      <div class="saved-header">
+        <span>⭐ Saved Guidance</span>
+        <span id="savedCount" style="font-size:11px;color:#aaa;font-weight:400;"></span>
+      </div>
+      <div id="savedList"></div>
+    </div>
+
     <p class="disc" id="disc">Adab Coach is not a Mufti and does not issue religious rulings.<br>For fatwas and halal/haram questions, consult a qualified scholar.</p>
   </div>
 </div>
@@ -109,127 +150,315 @@
 <div class="footer">Adab Coach AI &mdash; MVP v2.0</div>
 
 <script>
-  let lang = 'en';
+let lang = 'en';
+let lastResult = null;
+let lastSituation = '';
+let saved = JSON.parse(localStorage.getItem('adab_saved') || '[]');
 
-  const T = {
-    en: {
-      subtitle: 'Prophetic character guidance for modern social challenges',
-      clbl: 'Try an example or describe your own situation:',
-      chips: ['Credit at work','Loud neighbour','Broken promises','Disrespectful boss'],
-      sits: [
-        'My coworker keeps taking credit for my work in meetings.',
-        'My non-Muslim neighbour is very loud at night and it is affecting my sleep.',
-        'A close friend keeps breaking promises and letting me down repeatedly.',
-        'My boss speaks to me disrespectfully in front of the whole team.'
-      ],
-      ph: 'Describe your social situation here...',
-      btn: '✦ Ask Adab Coach',
-      load: 'Retrieving authentic narrations',
-      disc: 'Adab Coach is not a Mufti and does not issue religious rulings.<br>For fatwas and halal/haram questions, consult a qualified scholar.'
-    },
-    ur: {
-      subtitle: 'جدید سماجی مسائل کے لیے نبوی اخلاق کی رہنمائی',
-      clbl: 'مثال منتخب کریں یا اپنی صورتحال بیان کریں:',
-      chips: ['کام پر ظلم','شور مچانے والا پڑوسی','وعدہ خلافی','بے عزتی کرنے والا باس'],
-      sits: [
-        'میرا ساتھی کارکن میٹنگ میں میرے کام کا کریڈٹ لے لیتا ہے۔',
-        'میرا غیر مسلم پڑوسی رات کو بہت شور مچاتا ہے۔',
-        'میرا دوست بار بار وعدہ توڑتا ہے۔',
-        'میرا باس سب کے سامنے مجھ سے بے عزتی سے پیش آتا ہے۔'
-      ],
-      ph: 'اپنی صورتحال یہاں بیان کریں...',
-      btn: '✦ ادب کوچ سے پوچھیں',
-      load: 'مستند احادیث تلاش کی جا رہی ہیں',
-      disc: 'ادب کوچ مفتی نہیں ہے۔<br>فتوے کے لیے کسی عالم سے رجوع کریں۔'
-    }
-  };
+const T = {
+  en: {
+    subtitle: 'Prophetic character guidance for modern social challenges',
+    clbl: 'Try an example or describe your own situation:',
+    chips: ['Credit at work','Loud neighbour','Broken promises','Disrespectful boss'],
+    extraChips: ['Family conflict','Rumours at work','Jealous friend','Rude relative','Ungrateful colleague','Social media argument','Workplace bullying','Angry parent'],
+    sits: [
+      'My coworker keeps taking credit for my work in meetings.',
+      'My non-Muslim neighbour is very loud at night and it is affecting my sleep.',
+      'A close friend keeps breaking promises and letting me down repeatedly.',
+      'My boss speaks to me disrespectfully in front of the whole team.'
+    ],
+    extraSits: [
+      'My family members are always arguing and it is causing stress at home.',
+      'A colleague spreads rumours about me at work.',
+      'My friend is jealous of my success and it is affecting our friendship.',
+      'My relative always makes rude comments about my life choices.',
+      'My colleague never appreciates or acknowledges my help.',
+      'I got into a heated argument on social media and regret it.',
+      'Someone at work is bullying me and making me feel small.',
+      'My parent gets very angry and says hurtful things when upset.'
+    ],
+    ph: 'Describe your social situation here...',
+    btn: '✦ Ask Adab Coach',
+    load: 'Retrieving authentic narrations',
+    disc: 'Adab Coach is not a Mufti and does not issue religious rulings.<br>For fatwas and halal/haram questions, consult a qualified scholar.',
+    showMore: '+ Show more examples',
+    showLess: '- Show less',
+    helpful: 'Was this helpful?',
+    copy: '📋 Copy',
+    whatsapp: '💬 WhatsApp',
+    savebtn: '⭐ Save',
+    print: '🖨️ Print',
+    copied: 'Copied to clipboard!',
+    saved_toast: 'Guidance saved!',
+    unsaved_toast: 'Removed from saved.',
+    rating_thanks: 'JazakAllah Khair for your feedback! 🌿'
+  },
+  ur: {
+    subtitle: 'جدید سماجی مسائل کے لیے نبوی اخلاق کی رہنمائی',
+    clbl: 'مثال منتخب کریں یا اپنی صورتحال بیان کریں:',
+    chips: ['کام پر ظلم','شور مچانے والا پڑوسی','وعدہ خلافی','بے عزتی کرنے والا باس'],
+    extraChips: ['خاندانی جھگڑا','جھوٹی افواہیں','حسد کرنے والا دوست','بدتمیز رشتہ دار','ناشکرا ساتھی','سوشل میڈیا جھگڑا','کام پر ظلم','غصیلے والدین'],
+    sits: [
+      'میرا ساتھی کارکن میٹنگ میں میرے کام کا کریڈٹ لے لیتا ہے۔',
+      'میرا غیر مسلم پڑوسی رات کو بہت شور مچاتا ہے۔',
+      'میرا دوست بار بار وعدہ توڑتا ہے۔',
+      'میرا باس سب کے سامنے مجھ سے بے عزتی سے پیش آتا ہے۔'
+    ],
+    extraSits: [
+      'گھر میں ہر وقت جھگڑا ہوتا ہے۔',
+      'ایک ساتھی میرے بارے میں جھوٹی باتیں پھیلاتا ہے۔',
+      'میرا دوست میری کامیابی سے جلتا ہے۔',
+      'میرا رشتہ دار ہمیشہ بری باتیں کرتا ہے۔',
+      'میرا ساتھی کبھی شکریہ ادا نہیں کرتا۔',
+      'سوشل میڈیا پر جھگڑا ہو گیا۔',
+      'کوئی کام پر مجھے تنگ کرتا ہے۔',
+      'والدین غصے میں تکلیف دہ باتیں کہتے ہیں۔'
+    ],
+    ph: 'اپنی صورتحال یہاں بیان کریں...',
+    btn: '✦ ادب کوچ سے پوچھیں',
+    load: 'مستند احادیث تلاش کی جا رہی ہیں',
+    disc: 'ادب کوچ مفتی نہیں ہے۔<br>فتوے کے لیے کسی عالم سے رجوع کریں۔',
+    showMore: '+ مزید مثالیں',
+    showLess: '- کم کریں',
+    helpful: 'کیا یہ مددگار تھا؟',
+    copy: '📋 کاپی',
+    whatsapp: '💬 واٹس ایپ',
+    savebtn: '⭐ محفوظ',
+    print: '🖨️ پرنٹ',
+    copied: 'کاپی ہو گیا!',
+    saved_toast: 'محفوظ ہو گیا!',
+    unsaved_toast: 'ہٹا دیا گیا۔',
+    rating_thanks: 'جزاک اللہ خیر! 🌿'
+  }
+};
 
-  function setLang(l) {
-    lang = l;
-    const t = T[l];
-    document.getElementById('subtitle').textContent = t.subtitle;
-    document.getElementById('clbl').textContent = t.clbl;
-    document.getElementById('disc').innerHTML = t.disc;
-    document.getElementById('btn').textContent = t.btn;
-    const sit = document.getElementById('sit');
-    sit.placeholder = t.ph;
-    sit.dir = l === 'ur' ? 'rtl' : 'ltr';
-    const chips = document.getElementById('chips');
-    chips.innerHTML = '';
-    t.chips.forEach((c, i) => {
-      const el = document.createElement('span');
-      el.className = 'chip';
-      el.textContent = c;
-      el.onclick = () => set(el, t.sits[i]);
-      chips.appendChild(el);
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function setLang(l) {
+  lang = l;
+  const t = T[l];
+  document.getElementById('subtitle').textContent = t.subtitle;
+  document.getElementById('clbl').textContent = t.clbl;
+  document.getElementById('disc').innerHTML = t.disc;
+  document.getElementById('btn').textContent = t.btn;
+  document.getElementById('showMoreBtn').textContent = t.showMore;
+  const sit = document.getElementById('sit');
+  sit.placeholder = t.ph;
+  sit.dir = l === 'ur' ? 'rtl' : 'ltr';
+  buildChips();
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.lang-btn')[l === 'en' ? 0 : 1].classList.add('active');
+  document.getElementById('output').innerHTML = '';
+  renderSaved();
+}
+
+function buildChips() {
+  const t = T[lang];
+  const chips = document.getElementById('chips');
+  const extra = document.getElementById('extraChips');
+  chips.innerHTML = '';
+  extra.innerHTML = '';
+  t.chips.forEach((c, i) => {
+    const el = document.createElement('span');
+    el.className = 'chip';
+    el.textContent = c;
+    el.onclick = () => set(el, t.sits[i]);
+    chips.appendChild(el);
+  });
+  t.extraChips.forEach((c, i) => {
+    const el = document.createElement('span');
+    el.className = 'chip';
+    el.textContent = c;
+    el.onclick = () => set(el, t.extraSits[i]);
+    extra.appendChild(el);
+  });
+}
+
+function toggleMore() {
+  const extra = document.getElementById('extraChips');
+  const btn = document.getElementById('showMoreBtn');
+  const t = T[lang];
+  if (extra.classList.contains('open')) {
+    extra.classList.remove('open');
+    btn.textContent = t.showMore;
+  } else {
+    extra.classList.add('open');
+    btn.textContent = t.showLess;
+  }
+}
+
+function set(el, txt) {
+  document.getElementById('sit').value = txt;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function copyResult() {
+  if (!lastResult) return;
+  const r = lastResult;
+  const text = `*Adab Coach AI*\n\n*Situation:* ${lastSituation}\n\n*Prophetic Principle:* ${r.principle}\n\n*Hadith:* "${r.hadith_text}"\n— ${r.collection}, Hadith ${r.hadith_number}\n\n*Action Plan:*\n1. ${r.stage1}\n2. ${r.stage2}\n3. ${r.stage3}\n\n*What to say:* "${r.script}"\n\n*Avoid:* ${r.avoid}\n\nadab-coach.vercel.app`;
+  navigator.clipboard.writeText(text).then(() => showToast(T[lang].copied));
+}
+
+function shareWhatsApp() {
+  if (!lastResult) return;
+  const r = lastResult;
+  const text = encodeURIComponent(`*Adab Coach AI* 🌿\n\n*${lastSituation}*\n\n*Prophetic Principle:* ${r.principle}\n\n*Hadith:* "${r.hadith_text}"\n\n*Steps:*\n1. ${r.stage1}\n2. ${r.stage2}\n3. ${r.stage3}\n\n*What to say:* "${r.script}"\n\nGet Islamic guidance: adab-coach.vercel.app`);
+  window.open(`https://wa.me/?text=${text}`, '_blank');
+}
+
+function saveResult() {
+  if (!lastResult) return;
+  const key = lastSituation.substring(0, 50);
+  const exists = saved.findIndex(s => s.key === key);
+  if (exists > -1) {
+    saved.splice(exists, 1);
+    showToast(T[lang].unsaved_toast);
+  } else {
+    saved.unshift({ key, situation: lastSituation, result: lastResult, date: new Date().toLocaleDateString() });
+    if (saved.length > 10) saved.pop();
+    showToast(T[lang].saved_toast);
+  }
+  localStorage.setItem('adab_saved', JSON.stringify(saved));
+  renderSaved();
+}
+
+function renderSaved() {
+  const sec = document.getElementById('savedSection');
+  const list = document.getElementById('savedList');
+  const count = document.getElementById('savedCount');
+  if (saved.length === 0) { sec.style.display = 'none'; return; }
+  sec.style.display = 'block';
+  count.textContent = `${saved.length} saved`;
+  list.innerHTML = '';
+  saved.forEach((s, i) => {
+    const div = document.createElement('div');
+    div.className = 'saved-item';
+    div.innerHTML = `<span>${s.situation.substring(0, 45)}...</span><span class="del" onclick="deleteSaved(${i})">×</span>`;
+    div.onclick = (e) => { if (e.target.className !== 'del') loadSaved(i); };
+    list.appendChild(div);
+  });
+}
+
+function deleteSaved(i) {
+  saved.splice(i, 1);
+  localStorage.setItem('adab_saved', JSON.stringify(saved));
+  renderSaved();
+}
+
+function loadSaved(i) {
+  const s = saved[i];
+  document.getElementById('sit').value = s.situation;
+  lastSituation = s.situation;
+  lastResult = s.result;
+  renderResult(s.result);
+}
+
+function printResult() {
+  if (!lastResult) return;
+  const r = lastResult;
+  const w = window.open('', '_blank');
+  w.document.write(`<html><head><title>Adab Coach - ${lastSituation.substring(0,30)}</title><style>body{font-family:Arial,sans-serif;max-width:600px;margin:40px auto;padding:20px;color:#1a1a1a;}h1{color:#0A6B4F;font-size:22px;}h2{color:#9A7B00;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;margin-top:20px;}p{line-height:1.7;font-size:14px;}.hadith{background:#FFFDF0;border-left:3px solid #F5D98A;padding:10px;margin:10px 0;font-style:italic;color:#9A7B00;}.step{display:flex;gap:10px;margin:8px 0;}.num{background:#F5D98A;color:#0A3D1F;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:12px;flex-shrink:0;}.script{background:#FFFDF0;border-left:3px solid #F5D98A;padding:10px;margin:10px 0;font-style:italic;}.footer{margin-top:30px;font-size:11px;color:#aaa;border-top:1px solid #eee;padding-top:10px;}</style></head><body>
+    <h1>Adab Coach AI 🌿</h1>
+    <p><strong>Situation:</strong> ${lastSituation}</p>
+    <h2>Prophetic Principle</h2><p>${r.principle}</p>
+    <div class="hadith">"${r.hadith_text}"<br><small>— ${r.collection}, ${r.book}, Hadith ${r.hadith_number} (${r.grade})</small></div>
+    <h2>3-Stage Action Plan</h2>
+    <div class="step"><div class="num">1</div><p>${r.stage1}</p></div>
+    <div class="step"><div class="num">2</div><p>${r.stage2}</p></div>
+    <div class="step"><div class="num">3</div><p>${r.stage3}</p></div>
+    <h2>What You Can Say</h2><div class="script">"${r.script}"</div>
+    <h2>What to Avoid</h2><p>${r.avoid}</p>
+    <div class="footer">Generated by Adab Coach AI — adab-coach.vercel.app<br>Adab Coach is not a Mufti. For fatwas, consult a qualified scholar.</div>
+    </body></html>`);
+  w.document.close();
+  w.print();
+}
+
+function rateResult(good) {
+  const bar = document.getElementById('ratingBar');
+  if (bar) bar.innerHTML = `<p style="color:#0A6B4F;font-weight:500">${T[lang].rating_thanks}</p>`;
+}
+
+function renderResult(r) {
+  const t = T[lang];
+  document.getElementById('output').innerHTML = `
+    <div class="result-card">
+      <div class="result-sec"><div class="sec-label">Prophetic Principle</div><div class="sec-text">${r.principle}</div><div class="hadith-box">"${r.hadith_text}"</div></div>
+      <div class="result-sec"><div class="sec-label">Your 3-Stage Action Plan</div>
+        <div class="step"><div class="step-num">1</div><div class="sec-text">${r.stage1}</div></div>
+        <div class="step"><div class="step-num">2</div><div class="sec-text">${r.stage2}</div></div>
+        <div class="step"><div class="step-num">3</div><div class="sec-text">${r.stage3}</div></div>
+      </div>
+      <div class="result-sec"><div class="sec-label">What You Can Say</div><div class="script-box">"${r.script}"</div></div>
+      <div class="result-sec"><div class="sec-label">What the Sunnah Says to Avoid</div><div class="sec-text" style="color:#666">${r.avoid}</div></div>
+      <div class="result-sec src"><div class="sec-label">Source Check — Verified Citation</div>
+        <table class="tbl">
+          <tr><td class="k">Collection</td><td class="v">${r.collection}</td></tr>
+          <tr><td class="k">Book</td><td class="v">${r.book}</td></tr>
+          <tr><td class="k">Hadith No.</td><td class="v">${r.hadith_number}</td></tr>
+          <tr><td class="k">Grade</td><td class="v"><span class="badge">${r.grade}</span></td></tr>
+          <tr><td class="k">Graded by</td><td class="v">${r.scholar}</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="action-bar">
+      <button class="action-btn copy" onclick="copyResult()">${t.copy}</button>
+      <button class="action-btn whatsapp" onclick="shareWhatsApp()">${t.whatsapp}</button>
+      <button class="action-btn save" onclick="saveResult()">${t.savebtn}</button>
+      <button class="action-btn print" onclick="printResult()">${t.print}</button>
+    </div>
+    <div class="rating-bar" id="ratingBar">
+      <p>${t.helpful}</p>
+      <button class="rate-btn" onclick="rateResult(true);this.classList.add('liked')">👍 Yes</button>
+      <button class="rate-btn" onclick="rateResult(false);this.classList.add('disliked')">👎 No</button>
+    </div>`;
+}
+
+const REDIRECT = ['haram','halal','fatwa','ruling','permitted','forbidden','divorce','riba','obligatory','fard','is it allowed'];
+
+async function askAdabCoach() {
+  const situation = document.getElementById('sit').value.trim();
+  if (!situation) { alert('Please describe your situation first.'); return; }
+  const btn = document.getElementById('btn');
+  const output = document.getElementById('output');
+  const t = T[lang];
+
+  if (REDIRECT.some(k => situation.toLowerCase().includes(k))) {
+    output.innerHTML = `<div style="background:#FAEEDA;border:1px solid #EF9F27;border-radius:10px;padding:1rem 1.25rem;margin-top:1rem;color:#633806;font-size:14px;line-height:1.7;"><strong style="display:block;margin-bottom:6px;font-size:15px;">This looks like a ruling question</strong>Adab Coach handles social character guidance — not halal/haram rulings. Please consult a qualified scholar at <strong>islamqa.info</strong>.</div>`;
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Searching...';
+  output.innerHTML = `<div class="loading">${t.load}<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></div>`;
+
+  try {
+    const response = await fetch('/api/ask', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ situation })
     });
-    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.lang-btn')[l === 'en' ? 0 : 1].classList.add('active');
-    document.getElementById('output').innerHTML = '';
+    const r = await response.json();
+    if (r.error) throw new Error(r.error);
+    lastResult = r;
+    lastSituation = situation;
+    renderResult(r);
+  } catch (error) {
+    output.innerHTML = `<div style="background:#FAEEDA;border:1px solid #EF9F27;border-radius:10px;padding:1rem 1.25rem;margin-top:1rem;color:#633806;font-size:14px;"><strong style="display:block;margin-bottom:6px;">Something went wrong</strong>${error.message || 'Please try again.'}</div>`;
   }
+  btn.disabled = false;
+  btn.textContent = T[lang].btn;
+}
 
-  function set(el, t) {
-    document.getElementById('sit').value = t;
-    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
-  }
-
-  const REDIRECT_KEYWORDS = ['haram','halal','fatwa','ruling','permitted','forbidden','divorce','riba','obligatory','fard','is it allowed'];
-  function isHardRedirect(text) {
-    return REDIRECT_KEYWORDS.some(k => text.toLowerCase().includes(k));
-  }
-
-  async function askAdabCoach() {
-    const situation = document.getElementById('sit').value.trim();
-    if (!situation) { alert('Please describe your situation first.'); return; }
-    const btn = document.getElementById('btn');
-    const output = document.getElementById('output');
-    const t = T[lang];
-
-    if (isHardRedirect(situation)) {
-      output.innerHTML = `<div style="background:#FAEEDA;border:1px solid #EF9F27;border-radius:10px;padding:1rem 1.25rem;margin-top:1rem;color:#633806;font-size:14px;line-height:1.7;"><strong style="display:block;margin-bottom:6px;font-size:15px;">This looks like a ruling question</strong>Adab Coach handles social character guidance — not halal/haram rulings. Please consult a qualified scholar at <strong>islamqa.info</strong>.</div>`;
-      return;
-    }
-
-    btn.disabled = true;
-    btn.textContent = 'Searching...';
-    output.innerHTML = `<div class="loading">${t.load}<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></div>`;
-
-    try {
-      const response = await fetch('/api/ask', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ situation })
-      });
-      const r = await response.json();
-      if (r.error) throw new Error(r.error);
-
-      output.innerHTML = `
-        <div class="result-card">
-          <div class="result-sec"><div class="sec-label">Prophetic Principle</div><div class="sec-text">${r.principle}</div><div class="hadith-box">"${r.hadith_text}"</div></div>
-          <div class="result-sec"><div class="sec-label">Your 3-Stage Action Plan</div>
-            <div class="step"><div class="step-num">1</div><div class="sec-text">${r.stage1}</div></div>
-            <div class="step"><div class="step-num">2</div><div class="sec-text">${r.stage2}</div></div>
-            <div class="step"><div class="step-num">3</div><div class="sec-text">${r.stage3}</div></div>
-          </div>
-          <div class="result-sec"><div class="sec-label">What You Can Say</div><div class="script-box">"${r.script}"</div></div>
-          <div class="result-sec"><div class="sec-label">What the Sunnah Says to Avoid</div><div class="sec-text" style="color:#666">${r.avoid}</div></div>
-          <div class="result-sec src"><div class="sec-label">Source Check — Verified Citation</div>
-            <table class="tbl">
-              <tr><td class="k">Collection</td><td class="v">${r.collection}</td></tr>
-              <tr><td class="k">Book</td><td class="v">${r.book}</td></tr>
-              <tr><td class="k">Hadith No.</td><td class="v">${r.hadith_number}</td></tr>
-              <tr><td class="k">Grade</td><td class="v"><span class="badge">${r.grade}</span></td></tr>
-              <tr><td class="k">Graded by</td><td class="v">${r.scholar}</td></tr>
-            </table>
-          </div>
-        </div>`;
-    } catch (error) {
-      output.innerHTML = `<div style="background:#FAEEDA;border:1px solid #EF9F27;border-radius:10px;padding:1rem 1.25rem;margin-top:1rem;color:#633806;font-size:14px;"><strong style="display:block;margin-bottom:6px;">Something went wrong</strong>${error.message || 'Please try again.'}</div>`;
-    }
-    btn.disabled = false;
-    btn.textContent = T[lang].btn;
-  }
+// Init
+buildChips();
+renderSaved();
 </script>
 </body>
 </html>
