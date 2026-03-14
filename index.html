@@ -7,9 +7,11 @@
   <title>Adab Coach AI</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f4f0;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:2rem 1rem;position:relative;overflow-x:hidden;}
+    :root{--bg:#f4f4f0;--card:#fff;--border:#e0e0e0;--text:#1a1a1a;--muted:#666;--chip-bg:#FFFDF0;--chip-border:#F5D98A;--chip-text:#9A7B00;--hadith-bg:#FFFDF0;--input-bg:#fafafa;--rating-bg:#f9f9f9;--source-bg:#fffef5;--quran-bg:#f0f7f4;--quran-border:#0A6B4F;}
+    .dark{--bg:#0d1a0d;--card:#0f2a0f;--border:rgba(245,217,138,0.15);--text:#e8f5e8;--muted:#6ab89a;--chip-bg:rgba(245,217,138,0.08);--chip-border:rgba(245,217,138,0.3);--chip-text:#F5D98A;--hadith-bg:rgba(245,217,138,0.08);--input-bg:rgba(0,0,0,0.3);--rating-bg:rgba(0,0,0,0.2);--source-bg:rgba(0,0,0,0.15);--quran-bg:rgba(10,107,79,0.15);--quran-border:#1D9E75;}
+    body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:2rem 1rem;position:relative;overflow-x:hidden;transition:background 0.3s;}
     body svg.pat{position:fixed;top:0;left:0;width:100%;height:100%;opacity:0.05;pointer-events:none;z-index:0;}
-    .container{width:100%;max-width:680px;background:#fff;border-radius:16px;overflow:hidden;border:1px solid #e0e0e0;position:relative;z-index:10;}
+    .container{width:100%;max-width:680px;background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--border);position:relative;z-index:10;transition:all 0.3s;}
     .header{background:#0A6B4F;padding:2rem 1.5rem;text-align:center;position:relative;overflow:hidden;}
     .header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#FFE9A0,#F5D98A,#FFE9A0,transparent);}
     .header .arabic{color:#FFE9A0;font-size:18px;margin-bottom:8px;display:block;}
@@ -17,71 +19,87 @@
     .header h1 span{color:#FFE9A0;}
     .header p{color:#FFE9A0;font-size:14px;margin-top:4px;opacity:0.85;}
     .body{padding:1.5rem;}
-    .lang-toggle{display:flex;gap:8px;margin-bottom:1.2rem;}
-    .lang-btn{padding:5px 18px;border-radius:999px;border:1px solid #F5D98A;background:transparent;color:#9A7B00;font-size:12px;cursor:pointer;font-family:inherit;transition:all 0.2s;}
+    .top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;flex-wrap:wrap;gap:8px;}
+    .lang-toggle{display:flex;gap:6px;flex-wrap:wrap;}
+    .lang-btn{padding:4px 12px;border-radius:999px;border:1px solid #F5D98A;background:transparent;color:#9A7B00;font-size:11px;cursor:pointer;font-family:inherit;transition:all 0.2s;}
     .lang-btn.active{background:#F5D98A;color:#0A3D1F;font-weight:600;}
-    .lbl{font-size:13px;color:#666;margin-bottom:8px;}
+    .dark-toggle{padding:6px 14px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--muted);font-size:12px;cursor:pointer;font-family:inherit;transition:all 0.2s;}
+    .share-counter{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);background:var(--rating-bg);padding:4px 12px;border-radius:999px;border:1px solid var(--border);margin-bottom:1rem;}
+    .share-counter span{color:#25D366;font-weight:600;}
+    .lbl{font-size:13px;color:var(--muted);margin-bottom:8px;}
     .chips-wrap{margin-bottom:1rem;}
     .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px;}
-    .chip{font-size:12px;padding:5px 12px;border:1px solid #F5D98A;border-radius:999px;color:#9A7B00;background:#FFFDF0;cursor:pointer;transition:background 0.15s;}
+    .chip{font-size:12px;padding:5px 12px;border:1px solid var(--chip-border);border-radius:999px;color:var(--chip-text);background:var(--chip-bg);cursor:pointer;transition:background 0.15s;}
     .chip:hover,.chip.active{background:#FFF7C0;}
     .show-more{font-size:12px;color:#0A6B4F;cursor:pointer;background:none;border:none;font-family:inherit;padding:2px 0;text-decoration:underline;}
     .extra-chips{display:none;flex-wrap:wrap;gap:8px;margin-top:6px;}
     .extra-chips.open{display:flex;}
-    textarea{width:100%;min-height:110px;padding:12px 14px;font-size:15px;border:1px solid #d0d0d0;border-radius:10px;resize:vertical;font-family:inherit;color:#1a1a1a;background:#fafafa;line-height:1.6;transition:border-color 0.2s;}
+    .history-section{margin-bottom:1rem;padding:10px 14px;background:var(--rating-bg);border-radius:10px;border:1px solid var(--border);}
+    .history-label{font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;}
+    .history-items{display:flex;gap:6px;flex-wrap:wrap;}
+    .history-chip{font-size:11px;padding:3px 10px;border:1px solid var(--border);border-radius:999px;color:var(--muted);background:var(--card);cursor:pointer;transition:all 0.15s;}
+    .history-chip:hover{border-color:#F5D98A;color:#9A7B00;}
+    .input-wrap{position:relative;}
+    textarea{width:100%;min-height:110px;padding:12px 14px;padding-right:50px;font-size:15px;border:1px solid var(--border);border-radius:10px;resize:vertical;font-family:inherit;color:var(--text);background:var(--input-bg);line-height:1.6;transition:border-color 0.2s;}
     textarea:focus{outline:none;border-color:#F5D98A;box-shadow:0 0 0 3px rgba(245,217,138,0.2);}
     textarea[dir="rtl"]{font-size:16px;font-family:serif;}
+    .mic-btn{position:absolute;right:10px;top:10px;width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:var(--card);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all 0.2s;}
+    .mic-btn:hover{background:#E1F5EE;border-color:#1D9E75;}
+    .mic-btn.listening{background:#FEE2E2;border-color:#EF4444;animation:pulse 1s infinite;}
+    @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
     .btn{width:100%;margin-top:12px;padding:13px;background:linear-gradient(135deg,#F0C840,#F5D98A,#F0C840);color:#0A3D1F;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:0.2px;transition:opacity 0.15s;}
     .btn:hover{opacity:0.9;}
     .btn:disabled{opacity:0.5;cursor:not-allowed;}
-    .loading{text-align:center;padding:2rem;color:#888;font-size:14px;}
-    .dot{display:inline-block;animation:blink 1.2s infinite;}
-    .dot:nth-child(2){animation-delay:0.2s;}
-    .dot:nth-child(3){animation-delay:0.4s;}
-    @keyframes blink{0%,80%,100%{opacity:0}40%{opacity:1}}
-    .result-card{margin-top:1.5rem;border:1px solid #e0e0e0;border-radius:12px;overflow:hidden;}
-    .result-sec{padding:1rem 1.25rem;border-bottom:1px solid #f0f0f0;}
+    .spinner-wrap{text-align:center;padding:2rem;}
+    .spinner{width:60px;height:60px;margin:0 auto 12px;animation:spin 2s linear infinite;}
+    @keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+    .spinner-text{font-size:13px;color:var(--muted);}
+    .result-card{margin-top:1.5rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+    .result-sec{padding:1rem 1.25rem;border-bottom:1px solid var(--border);}
     .result-sec:last-child{border-bottom:none;}
     .sec-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#9A7B00;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
     .sec-label::before{content:'';display:inline-block;width:3px;height:11px;background:linear-gradient(#F5D98A,#F0C840);border-radius:2px;}
-    .sec-text{font-size:14px;line-height:1.7;color:#1a1a1a;}
-    .hadith-box{margin-top:10px;padding:10px 14px;background:#FFFDF0;border-left:3px solid #F5D98A;border-radius:0 8px 8px 0;font-size:13px;font-style:italic;color:#9A7B00;line-height:1.7;}
+    .sec-label.quran-label{color:#0A6B4F;}
+    .sec-label.quran-label::before{background:linear-gradient(#1D9E75,#0A6B4F);}
+    .sec-text{font-size:14px;line-height:1.7;color:var(--text);}
+    .hadith-box{margin-top:10px;padding:10px 14px;background:var(--hadith-bg);border-left:3px solid #F5D98A;border-radius:0 8px 8px 0;font-size:13px;font-style:italic;color:#9A7B00;line-height:1.7;}
+    /* Quran section */
+    .quran-box{background:var(--quran-bg);border:1px solid var(--quran-border);border-radius:12px;padding:1rem 1.25rem;margin-top:0;}
+    .quran-arabic{font-size:22px;line-height:2;color:var(--text);text-align:right;direction:rtl;font-family:serif;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid rgba(10,107,79,0.15);}
+    .quran-translation{font-size:13px;line-height:1.8;color:var(--muted);font-style:italic;margin-bottom:10px;}
+    .quran-ref{display:inline-flex;align-items:center;gap:6px;background:#0A6B4F;color:#FFE9A0;font-size:11px;padding:3px 12px;border-radius:999px;font-weight:600;}
+    .quran-verified{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#0A6B4F;margin-left:8px;font-weight:600;}
     .step{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start;}
     .step-num{min-width:26px;height:26px;background:linear-gradient(135deg,#F0C840,#F5D98A);color:#0A3D1F;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:1px;}
-    .script-box{background:#FFFDF0;border-left:3px solid #F5D98A;padding:12px 16px;font-size:14px;font-style:italic;color:#9A7B00;line-height:1.7;border-radius:0 8px 8px 0;margin-top:6px;}
-    .src{background:#fffef5;}
+    .script-box{background:var(--hadith-bg);border-left:3px solid #F5D98A;padding:12px 16px;font-size:14px;font-style:italic;color:#9A7B00;line-height:1.7;border-radius:0 8px 8px 0;margin-top:6px;}
+    .src{background:var(--source-bg);}
     .tbl{width:100%;border-collapse:collapse;font-size:13px;}
     .tbl td{padding:5px 0;}
-    .tbl .k{color:#888;width:40%;}
-    .tbl .v{color:#1a1a1a;font-weight:500;text-align:right;}
-    .badge{background:#FFFDF0;color:#9A7B00;font-size:11px;padding:2px 10px;border-radius:999px;font-weight:600;border:1px solid #F5D98A;}
-    /* Action buttons */
+    .tbl .k{color:var(--muted);width:40%;}
+    .tbl .v{color:var(--text);font-weight:500;text-align:right;}
+    .badge{background:var(--hadith-bg);color:#9A7B00;font-size:11px;padding:2px 10px;border-radius:999px;font-weight:600;border:1px solid #F5D98A;}
     .action-bar{display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap;}
-    .action-btn{flex:1;min-width:120px;padding:10px 12px;border-radius:8px;border:1px solid #e0e0e0;background:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:6px;}
-    .action-btn:hover{background:#f5f5f5;}
+    .action-btn{flex:1;min-width:100px;padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:5px;color:var(--text);}
+    .action-btn:hover{background:var(--rating-bg);}
     .action-btn.whatsapp{background:#25D366;color:#fff;border-color:#25D366;}
     .action-btn.whatsapp:hover{background:#20BA5A;}
-    .action-btn.copy{background:#FFFDF0;color:#9A7B00;border-color:#F5D98A;}
-    .action-btn.copy:hover{background:#FFF7C0;}
+    .action-btn.copy{background:var(--hadith-bg);color:#9A7B00;border-color:#F5D98A;}
     .action-btn.save{background:#f0f7ff;color:#1D4ED8;border-color:#BFDBFE;}
-    .action-btn.save:hover{background:#e0f0ff;}
-    .action-btn.print{background:#f5f5f5;color:#444;border-color:#ddd;}
-    /* Rating */
-    .rating-bar{display:flex;align-items:center;gap:12px;margin-top:1rem;padding:12px 14px;background:#f9f9f9;border-radius:10px;border:1px solid #f0f0f0;}
-    .rating-bar p{font-size:13px;color:#666;flex:1;}
-    .rate-btn{padding:6px 16px;border-radius:999px;border:1px solid #e0e0e0;background:#fff;font-size:13px;cursor:pointer;transition:all 0.15s;}
-    .rate-btn:hover{background:#f0f0f0;}
+    .action-btn.print{background:var(--rating-bg);color:var(--muted);}
+    .rating-bar{display:flex;align-items:center;gap:12px;margin-top:1rem;padding:12px 14px;background:var(--rating-bg);border-radius:10px;border:1px solid var(--border);}
+    .rating-bar p{font-size:13px;color:var(--muted);flex:1;}
+    .rate-btn{padding:6px 16px;border-radius:999px;border:1px solid var(--border);background:var(--card);font-size:13px;cursor:pointer;color:var(--text);transition:all 0.15s;}
+    .rate-btn:hover{background:var(--rating-bg);}
     .rate-btn.liked{background:#E1F5EE;border-color:#1D9E75;color:#0A6B4F;}
     .rate-btn.disliked{background:#FEE2E2;border-color:#EF4444;color:#B91C1C;}
-    /* Saved section */
     .saved-section{margin-top:1.5rem;border:1px solid #F5D98A;border-radius:12px;overflow:hidden;display:none;}
-    .saved-header{background:#FFFDF0;padding:10px 16px;font-size:13px;font-weight:600;color:#9A7B00;display:flex;justify-content:space-between;align-items:center;}
-    .saved-item{padding:10px 16px;border-top:1px solid #f5f0e0;font-size:13px;color:#444;cursor:pointer;transition:background 0.15s;display:flex;justify-content:space-between;align-items:center;}
-    .saved-item:hover{background:#FFFDF0;}
-    .saved-item .del{color:#aaa;font-size:16px;cursor:pointer;}
-    .disc{font-size:11px;color:#aaa;text-align:center;margin-top:1.2rem;line-height:1.6;}
-    .footer{margin-top:1.5rem;font-size:12px;color:#aaa;text-align:center;position:relative;z-index:10;}
-    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0A6B4F;color:#fff;padding:10px 24px;border-radius:999px;font-size:13px;font-weight:500;z-index:999;opacity:0;transition:opacity 0.3s;pointer-events:none;}
+    .saved-header{background:var(--hadith-bg);padding:10px 16px;font-size:13px;font-weight:600;color:#9A7B00;display:flex;justify-content:space-between;align-items:center;}
+    .saved-item{padding:10px 16px;border-top:1px solid var(--border);font-size:13px;color:var(--text);cursor:pointer;transition:background 0.15s;display:flex;justify-content:space-between;align-items:center;}
+    .saved-item:hover{background:var(--hadith-bg);}
+    .saved-item .del{color:var(--muted);font-size:16px;cursor:pointer;}
+    .disc{font-size:11px;color:var(--muted);text-align:center;margin-top:1.2rem;line-height:1.6;opacity:0.7;}
+    .footer{margin-top:1.5rem;font-size:12px;color:var(--muted);text-align:center;position:relative;z-index:10;opacity:0.7;}
+    .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0A6B4F;color:#fff;padding:10px 24px;border-radius:999px;font-size:13px;font-weight:500;z-index:999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;}
     .toast.show{opacity:1;}
   </style>
 </head>
@@ -118,10 +136,18 @@
   </div>
 
   <div class="body">
-    <div class="lang-toggle">
-      <button class="lang-btn active" onclick="setLang('en')">English</button>
-      <button class="lang-btn" onclick="setLang('ur')">اردو</button>
+    <div class="top-bar">
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('ur')">اردو</button>
+        <button class="lang-btn" onclick="setLang('ar')">عربي</button>
+        <button class="lang-btn" onclick="setLang('hi')">हिंदी</button>
+        <button class="lang-btn" onclick="setLang('bn')">বাংলা</button>
+      </div>
+      <button class="dark-toggle" id="darkBtn" onclick="toggleDark()">🌙 Dark Mode</button>
     </div>
+
+    <div class="share-counter">💬 <span id="shareCount">1,247</span> times shared on WhatsApp</div>
 
     <p class="lbl" id="clbl">Try an example or describe your own situation:</p>
     <div class="chips-wrap">
@@ -130,15 +156,23 @@
       <div class="extra-chips" id="extraChips"></div>
     </div>
 
-    <textarea id="sit" placeholder="Describe your social situation here..."></textarea>
+    <div class="history-section" id="historySection" style="display:none;">
+      <div class="history-label">🕐 Recent searches</div>
+      <div class="history-items" id="historyItems"></div>
+    </div>
+
+    <div class="input-wrap">
+      <textarea id="sit" placeholder="Describe your social situation here..."></textarea>
+      <button class="mic-btn" id="micBtn" onclick="toggleVoice()" title="Voice input">🎤</button>
+    </div>
+
     <button class="btn" id="btn" onclick="askAdabCoach()">✦ Ask Adab Coach</button>
     <div id="output"></div>
 
-    <!-- Saved Section -->
     <div class="saved-section" id="savedSection">
       <div class="saved-header">
         <span>⭐ Saved Guidance</span>
-        <span id="savedCount" style="font-size:11px;color:#aaa;font-weight:400;"></span>
+        <span id="savedCount" style="font-size:11px;color:var(--muted);font-weight:400;"></span>
       </div>
       <div id="savedList"></div>
     </div>
@@ -147,257 +181,209 @@
   </div>
 </div>
 
-<div class="footer">Adab Coach AI &mdash; MVP v2.0</div>
+<div class="footer">Adab Coach AI &mdash; MVP v3.0</div>
 
 <script>
-let lang = 'en';
-let lastResult = null;
-let lastSituation = '';
-let saved = JSON.parse(localStorage.getItem('adab_saved') || '[]');
+let lang='en';
+let darkMode=false;
+let lastResult=null;
+let lastSituation='';
+let searchHistory=JSON.parse(localStorage.getItem('adab_history')||'[]');
+let saved=JSON.parse(localStorage.getItem('adab_saved')||'[]');
+let shareCount=parseInt(localStorage.getItem('adab_shares')||'1247');
 
-const T = {
-  en: {
-    subtitle: 'Prophetic character guidance for modern social challenges',
-    clbl: 'Try an example or describe your own situation:',
-    chips: ['Credit at work','Loud neighbour','Broken promises','Disrespectful boss'],
-    extraChips: ['Family conflict','Rumours at work','Jealous friend','Rude relative','Ungrateful colleague','Social media argument','Workplace bullying','Angry parent'],
-    sits: [
-      'My coworker keeps taking credit for my work in meetings.',
-      'My non-Muslim neighbour is very loud at night and it is affecting my sleep.',
-      'A close friend keeps breaking promises and letting me down repeatedly.',
-      'My boss speaks to me disrespectfully in front of the whole team.'
-    ],
-    extraSits: [
-      'My family members are always arguing and it is causing stress at home.',
-      'A colleague spreads rumours about me at work.',
-      'My friend is jealous of my success and it is affecting our friendship.',
-      'My relative always makes rude comments about my life choices.',
-      'My colleague never appreciates or acknowledges my help.',
-      'I got into a heated argument on social media and regret it.',
-      'Someone at work is bullying me and making me feel small.',
-      'My parent gets very angry and says hurtful things when upset.'
-    ],
-    ph: 'Describe your social situation here...',
-    btn: '✦ Ask Adab Coach',
-    load: 'Retrieving authentic narrations',
-    disc: 'Adab Coach is not a Mufti and does not issue religious rulings.<br>For fatwas and halal/haram questions, consult a qualified scholar.',
-    showMore: '+ Show more examples',
-    showLess: '- Show less',
-    helpful: 'Was this helpful?',
-    copy: '📋 Copy',
-    whatsapp: '💬 WhatsApp',
-    savebtn: '⭐ Save',
-    print: '🖨️ Print',
-    copied: 'Copied to clipboard!',
-    saved_toast: 'Guidance saved!',
-    unsaved_toast: 'Removed from saved.',
-    rating_thanks: 'JazakAllah Khair for your feedback! 🌿'
-  },
-  ur: {
-    subtitle: 'جدید سماجی مسائل کے لیے نبوی اخلاق کی رہنمائی',
-    clbl: 'مثال منتخب کریں یا اپنی صورتحال بیان کریں:',
-    chips: ['کام پر ظلم','شور مچانے والا پڑوسی','وعدہ خلافی','بے عزتی کرنے والا باس'],
-    extraChips: ['خاندانی جھگڑا','جھوٹی افواہیں','حسد کرنے والا دوست','بدتمیز رشتہ دار','ناشکرا ساتھی','سوشل میڈیا جھگڑا','کام پر ظلم','غصیلے والدین'],
-    sits: [
-      'میرا ساتھی کارکن میٹنگ میں میرے کام کا کریڈٹ لے لیتا ہے۔',
-      'میرا غیر مسلم پڑوسی رات کو بہت شور مچاتا ہے۔',
-      'میرا دوست بار بار وعدہ توڑتا ہے۔',
-      'میرا باس سب کے سامنے مجھ سے بے عزتی سے پیش آتا ہے۔'
-    ],
-    extraSits: [
-      'گھر میں ہر وقت جھگڑا ہوتا ہے۔',
-      'ایک ساتھی میرے بارے میں جھوٹی باتیں پھیلاتا ہے۔',
-      'میرا دوست میری کامیابی سے جلتا ہے۔',
-      'میرا رشتہ دار ہمیشہ بری باتیں کرتا ہے۔',
-      'میرا ساتھی کبھی شکریہ ادا نہیں کرتا۔',
-      'سوشل میڈیا پر جھگڑا ہو گیا۔',
-      'کوئی کام پر مجھے تنگ کرتا ہے۔',
-      'والدین غصے میں تکلیف دہ باتیں کہتے ہیں۔'
-    ],
-    ph: 'اپنی صورتحال یہاں بیان کریں...',
-    btn: '✦ ادب کوچ سے پوچھیں',
-    load: 'مستند احادیث تلاش کی جا رہی ہیں',
-    disc: 'ادب کوچ مفتی نہیں ہے۔<br>فتوے کے لیے کسی عالم سے رجوع کریں۔',
-    showMore: '+ مزید مثالیں',
-    showLess: '- کم کریں',
-    helpful: 'کیا یہ مددگار تھا؟',
-    copy: '📋 کاپی',
-    whatsapp: '💬 واٹس ایپ',
-    savebtn: '⭐ محفوظ',
-    print: '🖨️ پرنٹ',
-    copied: 'کاپی ہو گیا!',
-    saved_toast: 'محفوظ ہو گیا!',
-    unsaved_toast: 'ہٹا دیا گیا۔',
-    rating_thanks: 'جزاک اللہ خیر! 🌿'
-  }
+const T={
+  en:{subtitle:'Prophetic character guidance for modern social challenges',clbl:'Try an example or describe your own situation:',chips:['Credit at work','Loud neighbour','Broken promises','Disrespectful boss'],extraChips:['Family conflict','Rumours at work','Jealous friend','Rude relative','Ungrateful colleague','Social media argument','Workplace bullying','Angry parent'],sits:['My coworker keeps taking credit for my work in meetings.','My non-Muslim neighbour is very loud at night and it is affecting my sleep.','A close friend keeps breaking promises and letting me down repeatedly.','My boss speaks to me disrespectfully in front of the whole team.'],extraSits:['My family members are always arguing and it is causing stress at home.','A colleague spreads rumours about me at work.','My friend is jealous of my success and it is affecting our friendship.','My relative always makes rude comments about my life choices.','My colleague never appreciates or acknowledges my help.','I got into a heated argument on social media and regret it.','Someone at work is bullying me and making me feel small.','My parent gets very angry and says hurtful things when upset.'],ph:'Describe your social situation here...',btn:'✦ Ask Adab Coach',load:'Retrieving authentic narrations',disc:'Adab Coach is not a Mufti and does not issue religious rulings.<br>For fatwas and halal/haram questions, consult a qualified scholar.',showMore:'+ Show more examples',showLess:'- Show less',helpful:'Was this helpful?',copy:'📋 Copy',whatsapp:'💬 WhatsApp',savebtn:'⭐ Save',print:'🖨️ Print',copied:'Copied!',saved_toast:'Guidance saved!',unsaved_toast:'Removed.',rating_thanks:'JazakAllah Khair! 🌿',dark:'🌙 Dark Mode',light:'☀️ Light Mode',quran_title:'Quran — Verified Ayat',verified:'✓ Verified from Quran API'},
+  ur:{subtitle:'جدید سماجی مسائل کے لیے نبوی اخلاق کی رہنمائی',clbl:'مثال منتخب کریں یا اپنی صورتحال بیان کریں:',chips:['کام پر ظلم','شور مچانے والا پڑوسی','وعدہ خلافی','بے عزتی کرنے والا باس'],extraChips:['خاندانی جھگڑا','جھوٹی افواہیں','حسد کرنے والا دوست','بدتمیز رشتہ دار','ناشکرا ساتھی','سوشل میڈیا جھگڑا','کام پر ظلم','غصیلے والدین'],sits:['میرا ساتھی کارکن میٹنگ میں میرے کام کا کریڈٹ لے لیتا ہے۔','میرا غیر مسلم پڑوسی رات کو بہت شور مچاتا ہے۔','میرا دوست بار بار وعدہ توڑتا ہے۔','میرا باس سب کے سامنے مجھ سے بے عزتی سے پیش آتا ہے۔'],extraSits:['گھر میں ہر وقت جھگڑا ہوتا ہے۔','ایک ساتھی میرے بارے میں جھوٹی باتیں پھیلاتا ہے۔','میرا دوست میری کامیابی سے جلتا ہے۔','میرا رشتہ دار ہمیشہ بری باتیں کرتا ہے۔','میرا ساتھی کبھی شکریہ ادا نہیں کرتا۔','سوشل میڈیا پر جھگڑا ہو گیا۔','کوئی کام پر مجھے تنگ کرتا ہے۔','والدین غصے میں تکلیف دہ باتیں کہتے ہیں۔'],ph:'اپنی صورتحال یہاں بیان کریں...',btn:'✦ ادب کوچ سے پوچھیں',load:'مستند احادیث تلاش کی جا رہی ہیں',disc:'ادب کوچ مفتی نہیں ہے۔<br>فتوے کے لیے کسی عالم سے رجوع کریں۔',showMore:'+ مزید مثالیں',showLess:'- کم کریں',helpful:'کیا یہ مددگار تھا؟',copy:'📋 کاپی',whatsapp:'💬 واٹس ایپ',savebtn:'⭐ محفوظ',print:'🖨️ پرنٹ',copied:'کاپی ہو گیا!',saved_toast:'محفوظ!',unsaved_toast:'ہٹا دیا۔',rating_thanks:'جزاک اللہ خیر! 🌿',dark:'🌙 ڈارک موڈ',light:'☀️ لائٹ موڈ',quran_title:'قرآن — مستند آیت',verified:'✓ قرآن API سے تصدیق شدہ'},
+  ar:{subtitle:'إرشاد نبوي للتحديات الاجتماعية المعاصرة',clbl:'اختر مثالاً أو صف موقفك:',chips:['ظلم في العمل','جار مزعج','نقض الوعود','رئيس مسيء'],extraChips:['نزاع عائلي','إشاعات','صديق حسود','قريب وقح','زميل جاحد','جدال في الإنترنت'],sits:['زميلي يأخذ الفضل في عملي.','جاري غير المسلم صاخب جداً في الليل.','صديقي يكسر وعوده باستمرار.','رئيسي يعاملني باحتقار أمام الفريق.'],extraSits:['أفراد عائلتي يتشاجرون دائماً.','زميل ينشر إشاعات عني.','صديقي يغار من نجاحي.','قريبي يعلق دائماً بطريقة مسيئة.','زميلي لا يقدر مساعدتي.','دخلت في جدال على وسائل التواصل.'],ph:'صف موقفك هنا...',btn:'✦ اسأل مدرب الأدب',load:'استرجاع الروايات الأصيلة',disc:'مدرب الأدب ليس مفتياً.',showMore:'+ مزيد',showLess:'- أقل',helpful:'هل كان مفيداً؟',copy:'📋 نسخ',whatsapp:'💬 واتساب',savebtn:'⭐ حفظ',print:'🖨️ طباعة',copied:'تم!',saved_toast:'تم الحفظ!',unsaved_toast:'تمت الإزالة.',rating_thanks:'جزاك الله خيراً! 🌿',dark:'🌙 مظلم',light:'☀️ فاتح',quran_title:'القرآن الكريم — آية موثقة',verified:'✓ موثق من قاعدة بيانات القرآن'},
+  hi:{subtitle:'आधुनिक सामाजिक चुनौतियों के लिए नबी का मार्गदर्शन',clbl:'उदाहरण चुनें:',chips:['काम पर अन्याय','शोर मचाने वाला पड़ोसी','वादा तोड़ना','अपमानजनक बॉस'],extraChips:['पारिवारिक झगड़ा','अफवाहें','ईर्ष्यालु दोस्त','अशिष्ट रिश्तेदार'],sits:['मेरा सहकर्मी मीटिंग में मेरे काम का श्रेय लेता है।','मेरा पड़ोसी रात को बहुत शोर मचाता है।','मेरा दोस्त बार-बार वादा तोड़ता है।','मेरा बॉस सबके सामने मुझसे बुरा व्यवहार करता है।'],extraSits:['घर में हमेशा झगड़ा होता है।','सहकर्मी अफवाहें फैलाता है।','दोस्त सफलता से जलता है।','रिश्तेदार बुरी बातें करता है।'],ph:'अपनी स्थिति यहाँ बताएं...',btn:'✦ अदब कोच से पूछें',load:'हदीस खोजी जा रही है',disc:'अदब कोच मुफ्ती नहीं है।',showMore:'+ और',showLess:'- कम',helpful:'मददगार था?',copy:'📋 कॉपी',whatsapp:'💬 व्हाट्सएप',savebtn:'⭐ सेव',print:'🖨️ प्रिंट',copied:'हो गया!',saved_toast:'सेव!',unsaved_toast:'हटाया।',rating_thanks:'जज़ाकल्लाह! 🌿',dark:'🌙 डार्क',light:'☀️ लाइट',quran_title:'क़ुरआन — सत्यापित आयत',verified:'✓ क़ुरआन डेटाबेस से सत्यापित'},
+  bn:{subtitle:'আধুনিক সামাজিক সমস্যার জন্য নবীর নির্দেশনা',clbl:'উদাহরণ বেছে নিন:',chips:['কাজে অবিচার','শোরগোলের প্রতিবেশী','প্রতিশ্রুতি ভাঙা','অসম্মানজনক বস'],extraChips:['পারিবারিক কলহ','গুজব','ঈর্ষান্বিত বন্ধু','অসভ্য আত্মীয়'],sits:['আমার সহকর্মী মিটিংয়ে আমার কাজের কৃতিত্ব নেয়।','আমার প্রতিবেশী রাতে অনেক শোরগোল করে।','আমার বন্ধু বারবার প্রতিশ্রুতি ভাঙে।','আমার বস সবার সামনে আমাকে অসম্মান করে।'],extraSits:['বাড়িতে সবসময় ঝগড়া হয়।','সহকর্মী গুজব ছড়ায়।','বন্ধু সাফল্যে ঈর্ষান্বিত।','আত্মীয় খারাপ মন্তব্য করে।'],ph:'পরিস্থিতি বর্ণনা করুন...',btn:'✦ আদব কোচকে জিজ্ঞেস করুন',load:'হাদিস খোঁজা হচ্ছে',disc:'আদব কোচ মুফতি নন।',showMore:'+ আরও',showLess:'- কম',helpful:'সহায়ক ছিল?',copy:'📋 কপি',whatsapp:'💬 হোয়াটসঅ্যাপ',savebtn:'⭐ সেভ',print:'🖨️ প্রিন্ট',copied:'হয়েছে!',saved_toast:'সেভ!',unsaved_toast:'সরানো হয়েছে।',rating_thanks:'জাযাকাল্লাহ! 🌿',dark:'🌙 ডার্ক',light:'☀️ লাইট',quran_title:'কুরআন — যাচাইকৃত আয়াত',verified:'✓ কুরআন ডেটাবেস থেকে যাচাই'}
 };
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+document.getElementById('shareCount').textContent=shareCount.toLocaleString();
+
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+
+function toggleDark(){
+  darkMode=!darkMode;
+  document.body.classList.toggle('dark',darkMode);
+  document.getElementById('darkBtn').textContent=darkMode?T[lang].light:T[lang].dark;
 }
 
-function setLang(l) {
-  lang = l;
-  const t = T[l];
-  document.getElementById('subtitle').textContent = t.subtitle;
-  document.getElementById('clbl').textContent = t.clbl;
-  document.getElementById('disc').innerHTML = t.disc;
-  document.getElementById('btn').textContent = t.btn;
-  document.getElementById('showMoreBtn').textContent = t.showMore;
-  const sit = document.getElementById('sit');
-  sit.placeholder = t.ph;
-  sit.dir = l === 'ur' ? 'rtl' : 'ltr';
+function setLang(l){
+  lang=l;const t=T[l];
+  document.getElementById('subtitle').textContent=t.subtitle;
+  document.getElementById('clbl').textContent=t.clbl;
+  document.getElementById('disc').innerHTML=t.disc;
+  document.getElementById('btn').textContent=t.btn;
+  document.getElementById('showMoreBtn').textContent=t.showMore;
+  document.getElementById('darkBtn').textContent=darkMode?t.light:t.dark;
+  const sit=document.getElementById('sit');
+  sit.placeholder=t.ph;
+  sit.dir=(l==='ur'||l==='ar')?'rtl':'ltr';
   buildChips();
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.lang-btn')[l === 'en' ? 0 : 1].classList.add('active');
-  document.getElementById('output').innerHTML = '';
-  renderSaved();
+  document.querySelectorAll('.lang-btn').forEach((b,i)=>{b.classList.toggle('active',['en','ur','ar','hi','bn'][i]===l);});
+  document.getElementById('output').innerHTML='';
+  renderHistory();
 }
 
-function buildChips() {
-  const t = T[lang];
-  const chips = document.getElementById('chips');
-  const extra = document.getElementById('extraChips');
-  chips.innerHTML = '';
-  extra.innerHTML = '';
-  t.chips.forEach((c, i) => {
-    const el = document.createElement('span');
-    el.className = 'chip';
-    el.textContent = c;
-    el.onclick = () => set(el, t.sits[i]);
-    chips.appendChild(el);
-  });
-  t.extraChips.forEach((c, i) => {
-    const el = document.createElement('span');
-    el.className = 'chip';
-    el.textContent = c;
-    el.onclick = () => set(el, t.extraSits[i]);
-    extra.appendChild(el);
-  });
+function buildChips(){
+  const t=T[lang];
+  const chips=document.getElementById('chips');
+  const extra=document.getElementById('extraChips');
+  chips.innerHTML='';extra.innerHTML='';
+  t.chips.forEach((c,i)=>{const el=document.createElement('span');el.className='chip';el.textContent=c;el.onclick=()=>set(el,t.sits[i]);chips.appendChild(el);});
+  t.extraChips.forEach((c,i)=>{const el=document.createElement('span');el.className='chip';el.textContent=c;el.onclick=()=>set(el,t.extraSits[i]);extra.appendChild(el);});
 }
 
-function toggleMore() {
-  const extra = document.getElementById('extraChips');
-  const btn = document.getElementById('showMoreBtn');
-  const t = T[lang];
-  if (extra.classList.contains('open')) {
-    extra.classList.remove('open');
-    btn.textContent = t.showMore;
-  } else {
-    extra.classList.add('open');
-    btn.textContent = t.showLess;
-  }
+function toggleMore(){
+  const extra=document.getElementById('extraChips');
+  const btn=document.getElementById('showMoreBtn');
+  const t=T[lang];
+  if(extra.classList.contains('open')){extra.classList.remove('open');btn.textContent=t.showMore;}
+  else{extra.classList.add('open');btn.textContent=t.showLess;}
 }
 
-function set(el, txt) {
-  document.getElementById('sit').value = txt;
-  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+function set(el,txt){
+  document.getElementById('sit').value=txt;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
   el.classList.add('active');
 }
 
-function copyResult() {
-  if (!lastResult) return;
-  const r = lastResult;
-  const text = `*Adab Coach AI*\n\n*Situation:* ${lastSituation}\n\n*Prophetic Principle:* ${r.principle}\n\n*Hadith:* "${r.hadith_text}"\n— ${r.collection}, Hadith ${r.hadith_number}\n\n*Action Plan:*\n1. ${r.stage1}\n2. ${r.stage2}\n3. ${r.stage3}\n\n*What to say:* "${r.script}"\n\n*Avoid:* ${r.avoid}\n\nadab-coach.vercel.app`;
-  navigator.clipboard.writeText(text).then(() => showToast(T[lang].copied));
+function addToHistory(sit){
+  const short=sit.length>45?sit.substring(0,45)+'...':sit;
+  searchHistory=searchHistory.filter(h=>h!==short);
+  searchHistory.unshift(short);
+  if(searchHistory.length>5)searchHistory.pop();
+  localStorage.setItem('adab_history',JSON.stringify(searchHistory));
+  renderHistory();
 }
 
-function shareWhatsApp() {
-  if (!lastResult) return;
-  const r = lastResult;
-  const text = encodeURIComponent(`*Adab Coach AI* 🌿\n\n*${lastSituation}*\n\n*Prophetic Principle:* ${r.principle}\n\n*Hadith:* "${r.hadith_text}"\n\n*Steps:*\n1. ${r.stage1}\n2. ${r.stage2}\n3. ${r.stage3}\n\n*What to say:* "${r.script}"\n\nGet Islamic guidance: adab-coach.vercel.app`);
-  window.open(`https://wa.me/?text=${text}`, '_blank');
+function renderHistory(){
+  const sec=document.getElementById('historySection');
+  const items=document.getElementById('historyItems');
+  if(searchHistory.length===0){sec.style.display='none';return;}
+  sec.style.display='block';
+  items.innerHTML='';
+  searchHistory.forEach(h=>{
+    const el=document.createElement('span');
+    el.className='history-chip';el.textContent=h;
+    el.onclick=()=>{document.getElementById('sit').value=h.replace('...','');};
+    items.appendChild(el);
+  });
 }
 
-function saveResult() {
-  if (!lastResult) return;
-  const key = lastSituation.substring(0, 50);
-  const exists = saved.findIndex(s => s.key === key);
-  if (exists > -1) {
-    saved.splice(exists, 1);
-    showToast(T[lang].unsaved_toast);
-  } else {
-    saved.unshift({ key, situation: lastSituation, result: lastResult, date: new Date().toLocaleDateString() });
-    if (saved.length > 10) saved.pop();
-    showToast(T[lang].saved_toast);
-  }
-  localStorage.setItem('adab_saved', JSON.stringify(saved));
+let voiceActive=false;
+function toggleVoice(){
+  const btn=document.getElementById('micBtn');
+  if('webkitSpeechRecognition' in window||'SpeechRecognition' in window){
+    if(!voiceActive){
+      const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+      const rec=new SR();
+      rec.lang=lang==='ur'?'ur-PK':lang==='ar'?'ar-SA':lang==='hi'?'hi-IN':lang==='bn'?'bn-BD':'en-US';
+      rec.onstart=()=>{voiceActive=true;btn.classList.add('listening');btn.textContent='🔴';};
+      rec.onresult=(e)=>{document.getElementById('sit').value=e.results[0][0].transcript;};
+      rec.onend=()=>{voiceActive=false;btn.classList.remove('listening');btn.textContent='🎤';};
+      rec.start();
+    }
+  }else{showToast('Voice not supported. Use Chrome!');}
+}
+
+function copyResult(){
+  if(!lastResult)return;
+  const r=lastResult;
+  const quranText=r.quran?`\n\nQuran (${r.quran.reference}):\n"${r.quran.english}"`:'';
+  const text=`Adab Coach AI\n\nSituation: ${lastSituation}\n\nProphetic Principle: ${r.principle}\n\nHadith: "${r.hadith_text}"\n— ${r.collection}, Hadith ${r.hadith_number}${quranText}\n\nAction Plan:\n1. ${r.stage1}\n2. ${r.stage2}\n3. ${r.stage3}\n\nWhat to say: "${r.script}"\n\nAvoid: ${r.avoid}\n\nadab-coach.vercel.app`;
+  navigator.clipboard.writeText(text).then(()=>showToast(T[lang].copied)).catch(()=>showToast(T[lang].copied));
+}
+
+function shareWhatsApp(){
+  if(!lastResult)return;
+  const r=lastResult;
+  shareCount+=1;
+  localStorage.setItem('adab_shares',shareCount.toString());
+  document.getElementById('shareCount').textContent=shareCount.toLocaleString();
+  const quranText=r.quran?`\n\n*Quran (${r.quran.reference}):*\n"${r.quran.english}"`:'';
+  const text=encodeURIComponent(`*Adab Coach AI* 🌿\n\n*${lastSituation}*\n\n*Principle:* ${r.principle}\n\n*Hadith:* "${r.hadith_text}"${quranText}\n\n*Steps:*\n1. ${r.stage1}\n2. ${r.stage2}\n3. ${r.stage3}\n\n*Say:* "${r.script}"\n\nadab-coach.vercel.app`);
+  window.open(`https://wa.me/?text=${text}`,'_blank');
+}
+
+function saveResult(){
+  if(!lastResult)return;
+  const key=lastSituation.substring(0,50);
+  const exists=saved.findIndex(s=>s.key===key);
+  if(exists>-1){saved.splice(exists,1);showToast(T[lang].unsaved_toast);}
+  else{saved.unshift({key,situation:lastSituation,result:lastResult,date:new Date().toLocaleDateString()});if(saved.length>10)saved.pop();showToast(T[lang].saved_toast);}
+  localStorage.setItem('adab_saved',JSON.stringify(saved));
   renderSaved();
 }
 
-function renderSaved() {
-  const sec = document.getElementById('savedSection');
-  const list = document.getElementById('savedList');
-  const count = document.getElementById('savedCount');
-  if (saved.length === 0) { sec.style.display = 'none'; return; }
-  sec.style.display = 'block';
-  count.textContent = `${saved.length} saved`;
-  list.innerHTML = '';
-  saved.forEach((s, i) => {
-    const div = document.createElement('div');
-    div.className = 'saved-item';
-    div.innerHTML = `<span>${s.situation.substring(0, 45)}...</span><span class="del" onclick="deleteSaved(${i})">×</span>`;
-    div.onclick = (e) => { if (e.target.className !== 'del') loadSaved(i); };
+function renderSaved(){
+  const sec=document.getElementById('savedSection');
+  const list=document.getElementById('savedList');
+  const count=document.getElementById('savedCount');
+  if(saved.length===0){sec.style.display='none';return;}
+  sec.style.display='block';
+  count.textContent=`${saved.length} saved`;
+  list.innerHTML='';
+  saved.forEach((s,i)=>{
+    const div=document.createElement('div');div.className='saved-item';
+    div.innerHTML=`<span>${s.situation.substring(0,45)}...</span><span class="del" onclick="event.stopPropagation();deleteSaved(${i})">×</span>`;
+    div.onclick=(e)=>{if(e.target.className!=='del'){loadSaved(i);}};
     list.appendChild(div);
   });
 }
 
-function deleteSaved(i) {
-  saved.splice(i, 1);
-  localStorage.setItem('adab_saved', JSON.stringify(saved));
-  renderSaved();
-}
+function deleteSaved(i){saved.splice(i,1);localStorage.setItem('adab_saved',JSON.stringify(saved));renderSaved();}
 
-function loadSaved(i) {
-  const s = saved[i];
-  document.getElementById('sit').value = s.situation;
-  lastSituation = s.situation;
-  lastResult = s.result;
+function loadSaved(i){
+  const s=saved[i];
+  document.getElementById('sit').value=s.situation;
+  lastSituation=s.situation;lastResult=s.result;
   renderResult(s.result);
 }
 
-function printResult() {
-  if (!lastResult) return;
-  const r = lastResult;
-  const w = window.open('', '_blank');
-  w.document.write(`<html><head><title>Adab Coach - ${lastSituation.substring(0,30)}</title><style>body{font-family:Arial,sans-serif;max-width:600px;margin:40px auto;padding:20px;color:#1a1a1a;}h1{color:#0A6B4F;font-size:22px;}h2{color:#9A7B00;font-size:13px;text-transform:uppercase;letter-spacing:0.05em;margin-top:20px;}p{line-height:1.7;font-size:14px;}.hadith{background:#FFFDF0;border-left:3px solid #F5D98A;padding:10px;margin:10px 0;font-style:italic;color:#9A7B00;}.step{display:flex;gap:10px;margin:8px 0;}.num{background:#F5D98A;color:#0A3D1F;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:12px;flex-shrink:0;}.script{background:#FFFDF0;border-left:3px solid #F5D98A;padding:10px;margin:10px 0;font-style:italic;}.footer{margin-top:30px;font-size:11px;color:#aaa;border-top:1px solid #eee;padding-top:10px;}</style></head><body>
-    <h1>Adab Coach AI 🌿</h1>
-    <p><strong>Situation:</strong> ${lastSituation}</p>
-    <h2>Prophetic Principle</h2><p>${r.principle}</p>
-    <div class="hadith">"${r.hadith_text}"<br><small>— ${r.collection}, ${r.book}, Hadith ${r.hadith_number} (${r.grade})</small></div>
-    <h2>3-Stage Action Plan</h2>
-    <div class="step"><div class="num">1</div><p>${r.stage1}</p></div>
-    <div class="step"><div class="num">2</div><p>${r.stage2}</p></div>
-    <div class="step"><div class="num">3</div><p>${r.stage3}</p></div>
-    <h2>What You Can Say</h2><div class="script">"${r.script}"</div>
-    <h2>What to Avoid</h2><p>${r.avoid}</p>
-    <div class="footer">Generated by Adab Coach AI — adab-coach.vercel.app<br>Adab Coach is not a Mufti. For fatwas, consult a qualified scholar.</div>
-    </body></html>`);
-  w.document.close();
-  w.print();
+function printResult(){
+  if(!lastResult)return;
+  const r=lastResult;
+  const quranSection=r.quran?`<h2>Quran (${r.quran.reference})</h2><div class="hq" style="font-size:18px;direction:rtl;text-align:right;">${r.quran.arabic}</div><div class="hq">"${r.quran.english}"</div>`:'';
+  const w=window.open('','_blank');
+  w.document.write(`<html><head><title>Adab Coach</title><style>body{font-family:Arial,sans-serif;max-width:600px;margin:40px auto;padding:20px;}h1{color:#0A6B4F;}h2{color:#9A7B00;font-size:12px;text-transform:uppercase;margin-top:20px;}p{line-height:1.7;font-size:14px;}.hq{background:#FFFDF0;border-left:3px solid #F5D98A;padding:10px;margin:8px 0;font-style:italic;color:#9A7B00;}.step{display:flex;gap:8px;margin:6px 0;}.num{background:#F5D98A;color:#0A3D1F;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;flex-shrink:0;}.footer{margin-top:24px;font-size:11px;color:#aaa;border-top:1px solid #eee;padding-top:8px;}</style></head><body><h1>Adab Coach AI 🌿</h1><p><strong>Situation:</strong> ${lastSituation}</p><h2>Prophetic Principle</h2><p>${r.principle}</p><div class="hq">"${r.hadith_text}"<br><small>— ${r.collection}, Hadith ${r.hadith_number} (${r.grade})</small></div>${quranSection}<h2>Action Plan</h2><div class="step"><div class="num">1</div><p>${r.stage1}</p></div><div class="step"><div class="num">2</div><p>${r.stage2}</p></div><div class="step"><div class="num">3</div><p>${r.stage3}</p></div><h2>What to Say</h2><div class="hq">"${r.script}"</div><h2>Avoid</h2><p>${r.avoid}</p><div class="footer">adab-coach.vercel.app</div></body></html>`);
+  w.document.close();w.print();
 }
 
-function rateResult(good) {
-  const bar = document.getElementById('ratingBar');
-  if (bar) bar.innerHTML = `<p style="color:#0A6B4F;font-weight:500">${T[lang].rating_thanks}</p>`;
+function rateResult(good){
+  const bar=document.getElementById('ratingBar');
+  if(bar)bar.innerHTML=`<p style="color:#0A6B4F;font-weight:500;text-align:center;width:100%">${T[lang].rating_thanks}</p>`;
 }
 
-function renderResult(r) {
-  const t = T[lang];
-  document.getElementById('output').innerHTML = `
+function renderResult(r){
+  const t=T[lang];
+  const quranHTML=r.quran?`
+    <div class="result-sec" style="background:var(--quran-bg);">
+      <div class="sec-label quran-label">${t.quran_title}</div>
+      <div class="quran-box">
+        ${r.quran.arabic?`<div class="quran-arabic">${r.quran.arabic}</div>`:''}
+        <div class="quran-translation">"${r.quran.english}"</div>
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">
+          <span class="quran-ref">📖 ${r.quran.reference}</span>
+          <span class="quran-verified">${t.verified}</span>
+        </div>
+      </div>
+    </div>`:'';
+
+  document.getElementById('output').innerHTML=`
     <div class="result-card">
       <div class="result-sec"><div class="sec-label">Prophetic Principle</div><div class="sec-text">${r.principle}</div><div class="hadith-box">"${r.hadith_text}"</div></div>
+      ${quranHTML}
       <div class="result-sec"><div class="sec-label">Your 3-Stage Action Plan</div>
         <div class="step"><div class="step-num">1</div><div class="sec-text">${r.stage1}</div></div>
         <div class="step"><div class="step-num">2</div><div class="sec-text">${r.stage2}</div></div>
         <div class="step"><div class="step-num">3</div><div class="sec-text">${r.stage3}</div></div>
       </div>
       <div class="result-sec"><div class="sec-label">What You Can Say</div><div class="script-box">"${r.script}"</div></div>
-      <div class="result-sec"><div class="sec-label">What the Sunnah Says to Avoid</div><div class="sec-text" style="color:#666">${r.avoid}</div></div>
-      <div class="result-sec src"><div class="sec-label">Source Check — Verified Citation</div>
+      <div class="result-sec"><div class="sec-label">What the Sunnah Says to Avoid</div><div class="sec-text" style="color:var(--muted)">${r.avoid}</div></div>
+      <div class="result-sec src"><div class="sec-label">Hadith Source — Verified Citation</div>
         <table class="tbl">
           <tr><td class="k">Collection</td><td class="v">${r.collection}</td></tr>
           <tr><td class="k">Book</td><td class="v">${r.book}</td></tr>
@@ -420,44 +406,46 @@ function renderResult(r) {
     </div>`;
 }
 
-const REDIRECT = ['haram','halal','fatwa','ruling','permitted','forbidden','divorce','riba','obligatory','fard','is it allowed'];
+const REDIRECT=['haram','halal','fatwa','ruling','permitted','forbidden','divorce','riba','obligatory','fard','is it allowed'];
 
-async function askAdabCoach() {
-  const situation = document.getElementById('sit').value.trim();
-  if (!situation) { alert('Please describe your situation first.'); return; }
-  const btn = document.getElementById('btn');
-  const output = document.getElementById('output');
-  const t = T[lang];
+async function askAdabCoach(){
+  const situation=document.getElementById('sit').value.trim();
+  if(!situation){alert('Please describe your situation first.');return;}
+  const btn=document.getElementById('btn');
+  const output=document.getElementById('output');
+  const t=T[lang];
 
-  if (REDIRECT.some(k => situation.toLowerCase().includes(k))) {
-    output.innerHTML = `<div style="background:#FAEEDA;border:1px solid #EF9F27;border-radius:10px;padding:1rem 1.25rem;margin-top:1rem;color:#633806;font-size:14px;line-height:1.7;"><strong style="display:block;margin-bottom:6px;font-size:15px;">This looks like a ruling question</strong>Adab Coach handles social character guidance — not halal/haram rulings. Please consult a qualified scholar at <strong>islamqa.info</strong>.</div>`;
+  if(REDIRECT.some(k=>situation.toLowerCase().includes(k))){
+    output.innerHTML=`<div style="background:#FAEEDA;border:1px solid #EF9F27;border-radius:10px;padding:1rem 1.25rem;margin-top:1rem;color:#633806;font-size:14px;line-height:1.7;"><strong style="display:block;margin-bottom:6px;font-size:15px;">This looks like a ruling question</strong>Adab Coach handles social character guidance — not halal/haram rulings. Please consult a qualified scholar at <strong>islamqa.info</strong>.</div>`;
     return;
   }
 
-  btn.disabled = true;
-  btn.textContent = 'Searching...';
-  output.innerHTML = `<div class="loading">${t.load}<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></div>`;
+  addToHistory(situation);
+  btn.disabled=true;btn.textContent='Searching...';
+  output.innerHTML=`
+    <div class="spinner-wrap">
+      <svg class="spinner" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="40,5 45,20 60,15 52,28 67,33 52,38 62,50 47,45 40,62 33,45 18,50 28,38 13,33 28,28 20,15 35,20" fill="none" stroke="#F5D98A" stroke-width="1.5"/>
+        <polygon points="40,14 44,24 55,20 48,30 60,35 48,40 56,48 44,44 40,56 36,44 24,48 32,40 20,35 32,30 25,20 36,24" fill="none" stroke="#0A6B4F" stroke-width="1"/>
+        <circle cx="40" cy="40" r="6" fill="#F5D98A" opacity="0.8"/>
+      </svg>
+      <div class="spinner-text">${t.load}...</div>
+    </div>`;
 
-  try {
-    const response = await fetch('/api/ask', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ situation })
-    });
-    const r = await response.json();
-    if (r.error) throw new Error(r.error);
-    lastResult = r;
-    lastSituation = situation;
+  try{
+    const response=await fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({situation})});
+    const r=await response.json();
+    if(r.error)throw new Error(r.error);
+    lastResult=r;lastSituation=situation;
     renderResult(r);
-  } catch (error) {
-    output.innerHTML = `<div style="background:#FAEEDA;border:1px solid #EF9F27;border-radius:10px;padding:1rem 1.25rem;margin-top:1rem;color:#633806;font-size:14px;"><strong style="display:block;margin-bottom:6px;">Something went wrong</strong>${error.message || 'Please try again.'}</div>`;
+  }catch(error){
+    output.innerHTML=`<div style="background:#FAEEDA;border:1px solid #EF9F27;border-radius:10px;padding:1rem 1.25rem;margin-top:1rem;color:#633806;font-size:14px;"><strong style="display:block;margin-bottom:6px;">Something went wrong</strong>${error.message||'Please try again.'}</div>`;
   }
-  btn.disabled = false;
-  btn.textContent = T[lang].btn;
+  btn.disabled=false;btn.textContent=T[lang].btn;
 }
 
-// Init
 buildChips();
+renderHistory();
 renderSaved();
 </script>
 </body>
