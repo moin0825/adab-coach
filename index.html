@@ -392,14 +392,11 @@ function renderResult(r){
           <tr><td class="k">Grade</td><td class="v"><span class="badge">${r.grade}</span></td></tr>
           <tr><td class="k">Graded by</td><td class="v">${r.scholar}</td></tr>
         </table>
-        ${r.sunnah_com_url ? `<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
-          <a href="${r.sunnah_com_url}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#0A6B4F;color:#FFE9A0;font-size:12px;padding:7px 16px;border-radius:8px;text-decoration:none;font-weight:600;">
-            📖 Verify on Sunnah.com
-          </a>
-          ${r.quran?.quran_com_url ? `<a href="${r.quran.quran_com_url}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#1D4ED8;color:#fff;font-size:12px;padding:7px 16px;border-radius:8px;text-decoration:none;font-weight:600;">
-            📗 Verify on Quran.com
-          </a>` : ''}
-        </div>` : ''}
+        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+            ${r.sunnah_com_url ? `<a href="${r.sunnah_com_url}" target="_blank" rel="noopener" style="font-size:13px;color:#0A6B4F;text-decoration:underline;">📖 Sunnah.com</a>` : ''}
+            <a href="https://islam360.app/search?q=${encodeURIComponent(r.hadith_text ? r.hadith_text.substring(0,60) : '')}" target="_blank" rel="noopener" style="font-size:13px;color:#1a5276;text-decoration:underline;">🔍 Islam360</a>
+            ${r.quran?.quran_com_url ? `<a href="${r.quran.quran_com_url}" target="_blank" rel="noopener" style="font-size:13px;color:#1D4ED8;text-decoration:underline;">📗 Quran.com</a>` : ''}
+        </div>
       </div>
     </div>
     <div class="action-bar">
